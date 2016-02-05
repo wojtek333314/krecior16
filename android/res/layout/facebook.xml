@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:alpha="1"
+                android:background="@drawable/land0_blur">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/land0_blur"
+        android:visibility="invisible"/>
+
+    <com.facebook.login.widget.LoginButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/view"
+        android:layout_centerInParent="true"
+        android:visibility="invisible"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/sharebutton"
+        style="@style/com_facebook_button_share"
+        android:layout_below="@+id/view"
+        android:visibility="visible"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_alignLeft="@+id/view"
+        android:layout_alignStart="@+id/view"
+        android:layout_alignRight="@+id/view"
+        android:layout_alignEnd="@+id/view"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/likebutton"
+        android:visibility="visible"
+        style="@style/com_facebook_button_share"
+        android:nestedScrollingEnabled="false"
+        android:text="Like"
+        android:layout_alignLeft="@+id/sharebutton"
+        android:layout_alignStart="@+id/sharebutton"
+        android:layout_alignRight="@+id/sharebutton"
+        android:layout_alignEnd="@+id/sharebutton"
+        android:layout_below="@+id/sharebutton">
+    </Button>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="+100"
+        android:id="@+id/textView"
+        android:textColor="#ffff"
+        android:textStyle="bold"
+        android:layout_toRightOf="@+id/sharebutton"
+        android:layout_toEndOf="@+id/sharebutton"
+        android:layout_alignTop="@+id/imageView3"
+        android:gravity="center_vertical"
+        android:layout_alignBottom="@+id/likebutton"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="+500"
+        android:id="@+id/textView2"
+        android:layout_toRightOf="@+id/sharebutton"
+        android:layout_toEndOf="@+id/sharebutton"
+        android:textColor="#ffff"
+        android:textStyle="bold"
+        android:gravity="center_vertical"
+        android:layout_alignTop="@+id/sharebutton"
+        android:layout_alignBottom="@+id/sharebutton"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:id="@+id/imageView2"
+        android:src="@drawable/icon_diamond"
+        android:scaleType="fitStart"
+        android:layout_toRightOf="@+id/textView2"
+        android:layout_toEndOf="@+id/textView2"
+        android:layout_alignTop="@+id/sharebutton"
+        android:layout_alignBottom="@+id/textView2"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:id="@+id/imageView3"
+        android:src="@drawable/icon_diamond"
+        android:scaleType="fitStart"
+        android:layout_below="@+id/sharebutton"
+        android:layout_toRightOf="@+id/textView2"
+        android:layout_toEndOf="@+id/textView2"
+        android:layout_alignBottom="@+id/likebutton"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Thanks for share!"
+        android:id="@+id/textView3"
+        android:layout_alignTop="@+id/sharebutton"
+        android:layout_alignBottom="@+id/sharebutton"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/imageView2"
+        android:layout_alignEnd="@+id/imageView2"
+        android:textColor="#ffff"
+        android:textStyle="bold"
+        android:gravity="center_vertical|center_horizontal"
+        android:visibility="invisible"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Thanks for like!"
+        android:id="@+id/textView4"
+        android:textColor="#ffff"
+        android:textStyle="bold"
+        android:gravity="center_vertical|center_horizontal"
+        android:layout_below="@+id/sharebutton"
+        android:layout_alignBottom="@+id/likebutton"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:visibility="invisible"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView4"
+        android:src="@drawable/icon_fb"
+        android:scaleType="fitCenter"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_alignBottom="@+id/view"
+        android:layout_margin="90dp"/>
+
+    <ImageView
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:id="@+id/imageView5"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:background="@drawable/back"
+        android:layout_margin="10dp"/>
+
+</RelativeLayout>

@@ -1,0 +1,11 @@
+apply plugin: "java"
+sourceCompatibility = 1.6
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+sourceSets.main.java.srcDirs = ["src/"]
+eclipse.project {
+    name = appName + "-core"
+}
+dependencies {
+    compile 'com.badlogicgames.gdxpay:gdx-pay:0.5.0'
+    compile files('libs/openiab-0.9.8.6.jar')
+}
