@@ -23,6 +23,7 @@ public class DesktopLauncher {
 		 *
 		 */
 		//Wojtas test to moja linijka
+		//test kolizja
 		//new LwjglApplication(new Manager(null), config);
 
 	}
