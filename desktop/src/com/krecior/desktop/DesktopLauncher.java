@@ -23,8 +23,8 @@ public class DesktopLauncher {
 
 
 
-		 COMMMMITITEEEDEDEDED     fas 214214124 421421 
-		 *
+		 COMMMMITITEEEDEDEDED     fas 214214124 421421
+		 *421124412
 		 */
 		//Wojtas test to moja linijka
 		//test kolizja
