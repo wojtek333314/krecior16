@@ -26,7 +26,7 @@ public class DesktopLauncher {
 		 COMMMMITITEEEDEDEDED
 		 *
 		 */
-		
+		//Wojtas test to moja linijka
 		//new LwjglApplication(new Manager(null), config);
 
 	}
