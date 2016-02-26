@@ -102,7 +102,7 @@ public class AndroidLauncher extends AndroidApplication {
                 , new LevelDownloadListener() {
             @Override
             public void reDownload() {
-                if (Manager.DEVELOPER_VERSION) {
+                if (Manager.DEVELOPER_VERSION && isOnline()) {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -144,7 +144,6 @@ public class AndroidLauncher extends AndroidApplication {
                                 serverMultiTaskManager.addDownloadTask(new DownloadFile(Integer.toString(i)) {
                                     @Override
                                     public void onEnd(String out) {
-                                        System.out.println("level " + q + ":" + out);
                                         Data.setLevelDataJSON(q, out);
                                     }
                                 });
@@ -211,7 +210,6 @@ public class AndroidLauncher extends AndroidApplication {
                 serverMultiTaskManager.addDownloadTask(new DownloadFile(Integer.toString(i)) {
                     @Override
                     public void onEnd(String out) {
-                        System.out.println("level " + q + ":" + out);
                         Data.setLevelDataJSON(q, out);
                     }
                 });
@@ -250,21 +248,14 @@ public class AndroidLauncher extends AndroidApplication {
     @Override
     public void onActivityResult(final int requestCode, final int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        System.out.println("RESULT:" + data);
         for (String key : data.getExtras().keySet()) {
             Object value = data.getExtras().get(key);
-            System.out.println(key + "|" + value.toString() + "|" + value.getClass().getName());
         }
-        System.out.println("-------------------------------------");
         Bundle b = data.getExtras().getBundle("com.facebook.platform.protocol.RESULT_ARGS");
         for (String key : b.keySet()) {
             Object value = b.get(key);
-            System.out.println(key + "|" + value.toString() + "|" + value.getClass().getName());
-        }
-        System.out.println("+++++++++++++++++++++++++++++++++");
-        System.out.println((data.getExtras().getBundle("com.facebook.platform.protocol.RESULT_ARGS")));
-        System.out.println((data.getExtras().get("com.facebook.platform.protocol.PROTOCOL_ACTION")));
-        facebookPluginAndroid.getCallbackManager().onActivityResult(requestCode, resultCode, data);
+         }
+         facebookPluginAndroid.getCallbackManager().onActivityResult(requestCode, resultCode, data);
     }
 
     public void setupAds() {
@@ -282,5 +273,12 @@ public class AndroidLauncher extends AndroidApplication {
                 loadAd();
             }
         });
+    }
+
+    protected boolean isOnline() {
+        ConnectivityManager cm =
+                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        return netInfo != null && netInfo.isConnectedOrConnecting();
     }
 }

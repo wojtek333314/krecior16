@@ -214,10 +214,8 @@ public class FacebookActivityAndroid extends Activity {
     @Override
     public void onActivityResult(final int requestCode, final int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        System.out.println("RESULT:" + data);
         for (String key : data.getExtras().keySet()) {
             Object value = data.getExtras().get(key);
-            System.out.println(key + "|" + value.toString() + "|" + value.getClass().getName());
         }
         callbackManager.onActivityResult(requestCode, resultCode, data);
     }
