@@ -219,6 +219,6 @@ public class EndButton {
         for(Sprite s : diamonds)
             s.draw(spriteBatch);
         spriteBatch.end();
-        mainStage.draw();  
+        mainStage.draw();
     }
 }
