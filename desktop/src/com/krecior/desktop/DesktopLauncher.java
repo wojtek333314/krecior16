@@ -22,7 +22,7 @@ public class DesktopLauncher {
 		 '----------------'  '----------------'  '----------------'  '----------------'
 		 *
 		 */
-		
+		//Wojtas test to moja linijka
 		//new LwjglApplication(new Manager(null), config);
 
 	}
