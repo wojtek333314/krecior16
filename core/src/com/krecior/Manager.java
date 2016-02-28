@@ -16,6 +16,7 @@ import com.krecior.menu.chooseScreen.ChooseScreen;
 import com.krecior.menu.coinShop.CoinShopScreen;
 import com.krecior.menu.coinShop.appbiling.PlatformResolver;
 import com.krecior.menu.itemShop.ItemShopScreen;
+import com.krecior.menu.ranking.RankingFacade;
 import com.krecior.menu.socialNetwork.SocialNetworkScreen;
 import com.krecior.menu.socialNetwork.facebook.FacebookPluginListener;
 import com.krecior.sound.SoundManager;
@@ -25,6 +26,7 @@ import com.krecior.utils.Data;
 import com.krecior.utils.LevelDownloadListener;
 
 public class Manager extends Game {
+    public static  RankingFacade rankingFacade;
     public static LevelDownloadListener levelDownloadListener;
     // ----- app stores -------------------------
     public static boolean DEVELOPER_VERSION = true;
@@ -106,10 +108,11 @@ public class Manager extends Game {
         return returnbool;
     }
 
-    public Manager(FacebookPluginListener facebookPlugin, AdMobPlugin adMobPlugin, LevelDownloadListener levelDownloadListener) {
+    public Manager(FacebookPluginListener facebookPlugin, AdMobPlugin adMobPlugin, LevelDownloadListener levelDownloadListener, RankingFacade rankingFacade) {
         Manager.levelDownloadListener = levelDownloadListener;
         Manager.facebookPlugin = facebookPlugin;
         Manager.adMobPlugin = adMobPlugin;
+        Manager.rankingFacade = rankingFacade;
         setAppStore(APPSTORE_GOOGLE);    // change this if you deploy to another platform
 
         // ---- IAP: define products ---------------------

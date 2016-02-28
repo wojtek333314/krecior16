@@ -1,5 +1,7 @@
 package mapsUpdater;
 
+import com.krecior.utils.ServerRequestListener;
+
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -9,9 +11,9 @@ import java.net.URL;
 public class Request extends android.os.AsyncTask<Param,Void,Void> {
 	private static final String SERVER_PATH = "http://datastore.waw.pl/MolesWar";
 	private static String SERVICE = "";//name of service
-	private RequestListener requestListener;
+	private ServerRequestListener requestListener;
 
-	public Request(String serviceName, RequestListener requestListener){
+	public Request(String serviceName, ServerRequestListener requestListener){
 		this.SERVICE = serviceName;
 		this.requestListener = requestListener;
     }
@@ -34,10 +36,10 @@ public class Request extends android.os.AsyncTask<Param,Void,Void> {
 		      response.append(line);
 		    }
 		    rd.close();
-		    requestListener.onResponse(response.toString());
+		    requestListener.onSuccess(response.toString());
 		  } catch (Exception e) {
 		    e.printStackTrace();
-		    requestListener.onError("null response!");
+		    requestListener.onError(600,"null response!");
 		  } finally {
 		    if(connection != null) {
 		      connection.disconnect();

@@ -15,20 +15,25 @@ import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 import com.krecior.Manager;
+import com.krecior.menu.ranking.RankingFacade;
 import com.krecior.menu.socialNetwork.facebook.FacebookPluginListener;
 import com.krecior.utils.AdMobPlugin;
 import com.krecior.utils.Data;
 import com.krecior.utils.LevelDownloadListener;
+import com.krecior.utils.ServerRequestListener;
 
 import mapsUpdater.DownloadFile;
 import mapsUpdater.ServerMultiTaskManager;
+import ranking.RankingFacadeImpl;
 
 public class AndroidLauncher extends AndroidApplication {
     public static FacebookPluginListener facebookPluginListener;
 
+    private RankingFacadeImpl rankingFacadeImplementation;
     FacebookPluginAndroid facebookPluginAndroid;
     InterstitialAd interstitialAd;
     Manager manager;
+    RankingFacade rankingFacade;
     AndroidApplicationConfiguration config;
 
 
@@ -38,6 +43,23 @@ public class AndroidLauncher extends AndroidApplication {
         FacebookSdk.sdkInitialize(this);
 
         facebookPluginAndroid = new FacebookPluginAndroid(this);
+        rankingFacadeImplementation = new RankingFacadeImpl();
+        rankingFacade = new RankingFacade(){
+            @Override
+            public void registerNick(String nick, ServerRequestListener listener) {
+                rankingFacadeImplementation.registerNick(nick,listener);
+            }
+
+            @Override
+            public void registerPoints(String nick, int points, ServerRequestListener listener) {
+                rankingFacadeImplementation.registerPoints(nick,points,listener);
+            }
+
+            @Override
+            public void getPlayersRankingDependsOnNick(String nick, ServerRequestListener listener) {
+                rankingFacadeImplementation.getPlayersListDependOnNick(nick,listener);
+            }
+        };
         facebookPluginListener = new FacebookPluginListener() {
             @Override
             public void share() {
@@ -96,10 +118,7 @@ public class AndroidLauncher extends AndroidApplication {
             public void loadAd() {
                 AndroidLauncher.this.loadAd();
             }
-        })
-
-
-                , new LevelDownloadListener() {
+        }), new LevelDownloadListener() {
             @Override
             public void reDownload() {
                 if (Manager.DEVELOPER_VERSION && isOnline()) {
@@ -153,7 +172,7 @@ public class AndroidLauncher extends AndroidApplication {
                     });
                 }
             }
-        });
+        },rankingFacade);
         config = new AndroidApplicationConfiguration();
         ServerMultiTaskManager serverMultiTaskManager = null;
 

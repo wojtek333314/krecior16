@@ -18,6 +18,7 @@ import com.krecior.menu.itemShop.item.Item;
 import com.krecior.menu.objects.MenuMsgBox;
 import com.krecior.utils.Container;
 import com.krecior.utils.Data;
+import com.krecior.utils.ServerRequestListener;
 import com.krecior.utils.TextLabel;
 
 import java.util.ArrayList;
@@ -62,6 +63,8 @@ public class ItemShopScreen extends Stage implements Screen {
         showTopIconAndWallet();
 
         Manager.inputMultiplexer.addProcessor(mainStage);
+
+        exampleOfRanking();
     }
 
     @Override
@@ -251,4 +254,17 @@ public class ItemShopScreen extends Stage implements Screen {
         mainStage.addActor(topIcon);
     }
 
+    private void exampleOfRanking(){
+        Manager.rankingFacade.getPlayersRankingDependsOnNick("wojtas", new ServerRequestListener() {
+            @Override
+            public void onSuccess(String json) {
+                System.out.println(json);//wyswietlam odpowiedz serwera
+            }
+
+            @Override
+            public void onError(int code, String description) {
+                System.out.println("kurwa blad o kodzie:"+code+"/info:"+description);
+            }
+        });
+    }
 }
