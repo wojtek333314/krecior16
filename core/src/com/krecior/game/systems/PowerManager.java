@@ -80,7 +80,7 @@ public class PowerManager {
     }
 
     public boolean isTimePower() {
-        return pPowerType == PowerType.FIRE || pPowerType == PowerType.ERASE || pPowerType == PowerType.POISON;
+        return pPowerType == PowerType.FIRE || pPowerType == PowerType.ERASE;
     }
 
     public int getUse() {
@@ -155,7 +155,7 @@ public class PowerManager {
             pGame.getHud().setPowerCounter((float) pUse);
 
         if(pTime >= pPowerTime && pPowerTime > 0 && isTimePower()) {
-            stopPower(1);
+            stopPower();
             pPowerTime = -1;
         } else {
             for(Effect e : touchFollowers)
@@ -165,113 +165,113 @@ public class PowerManager {
 
     public void onTouchDown() {
         if(!pGame.getHud().isTouchOnAnyIcon())
-        switch(pPowerType) {
-            case DIAMOND:
-                break;
-            case FIRE:
-                if(pUse > 0) {
-                    pTime = 0;
-                    pPowerTime = 4f;
+            switch(pPowerType) {
+                case DIAMOND:
+                    break;
+                case FIRE:
+                    if(pUse > 0) {
+                        pTime = 0;
+                        pPowerTime = 4f;
 
-                    final Effect effect = new Effect(Container.pFireFrame[14]);
-                    effect.setSize(FIRE_SIZE, FIRE_SIZE);
-                    effect.setAnimation(new Animation(effect.getSprite(), pPowerTime / 4, 4, Container.pFireFrame, 0, 9, 0) {
-                        @Override
-                        public void onAnimationFinished() {
-                            touchFollowers.remove(effect);
-                            pGame.getEffectSystem().remove(effect);
-                        }
-                    });
-                    touchFollowers.add(effect);
-                    pGame.getEffectSystem().add(effect);
-                    SoundManager.play(SoundManager.fire_final);
+                        final Effect effect = new Effect(Container.pFireFrame[14]);
+                        effect.setSize(FIRE_SIZE, FIRE_SIZE);
+                        effect.setAnimation(new Animation(effect.getSprite(), pPowerTime / 4, 4, Container.pFireFrame, 0, 9, 0) {
+                            @Override
+                            public void onAnimationFinished() {
+                                touchFollowers.remove(effect);
+                                pGame.getEffectSystem().remove(effect);
+                            }
+                        });
+                        touchFollowers.add(effect);
+                        pGame.getEffectSystem().add(effect);
+                        SoundManager.play(SoundManager.fire_final);
 
-                    pUse--;
-                }
-                break;
-            case HAMMER:
-                if(pUse > 0) {
-                  hammerEffect(new Vector2(pGame.getTouchProcessor().getTouchX(),
-                            pGame.getTouchProcessor().getTouchY()), HAMMERS);
-
-                    pUse--;
-                }
-                break;
-            case NORMAL:
-
-                break;
-            case GUN:
-                if(pUse > 0) {
-                    powerTouchOnMoleResponse();
-                    SoundManager.play(SoundManager.shot_pistol_final);
-                    pUse--;
-
-                    if(pUse <= 0) {
-                        stopPower(2);
+                        pUse--;
                     }
-                }
-                break;
-            case POISON:
-                if(pUse > 0) {
-                    powerTouchOnHillResponse();
-                    pUse--;
-                    pPowerTime = 10f;
-                }
+                    break;
+                case HAMMER:
+                    if(pUse > 0) {
+                        hammerEffect(new Vector2(pGame.getTouchProcessor().getTouchX(),
+                                pGame.getTouchProcessor().getTouchY()), HAMMERS);
 
-                if(pUse <= 0)
-                    stopPower(3);
-                break;
-            case ERASE:
-                if(pUse > 0) {
-                    pTime = 0;
-                    pPowerTime = 1.5f;
-                    pUse--;
-                    SoundManager.play(SoundManager.eraser_final);
-                }
-                rubberSystem.onTouchDown();
-                break;
-            case SCREWDIVER:
-                if(pUse > 0) {
-                    screwdriverEffect(new Vector2(pGame.getTouchProcessor().getTouchX(),
-                            pGame.getTouchProcessor().getTouchY()), SCREWDRIVERS);
-
-                    pUse--;
-                }
-                break;
-            case LIGHTBOLT:
-                if(pUse > 0) {
-                    powerTouchOnMoleResponse();
-                    SoundManager.play(SoundManager.thunder_final);
-                    pUse--;
-
-                    final Effect effect = new Effect(Container.pBoltFrame[0]);
-                    effect.setSize(BOLT_WIDTH, BOLT_WIDTH * 4);
-                    effect.setPosition(pGame.getTouchProcessor().getTouchX() - effect.getSprite().getWidth() / 2,
-                            GameScreen.H - pGame.getTouchProcessor().getTouchY());
-                    effect.setAnimation(new Animation(effect.getSprite(), 0.25f, 1, Container.pBoltFrame, 0, 2, 0) {
-                        @Override
-                        public void onAnimationFinished() {
-                            pGame.getEffectSystem().remove(effect);
-                        }
-                    });
-                    pGame.getEffectSystem().add(effect);
-
-                    if(pUse <= 0) {
-                        stopPower(4);
+                        pUse--;
                     }
-                }
-                break;
-            case WATER:
-                if(pUse > 0) {
-                    powerTouchOnHillResponse();
-                    SoundManager.play(SoundManager.water_serving_final);
-                    pUse--;
-                }
+                    break;
+                case NORMAL:
 
-                if(pUse <= 0)
-                    stopPower(5);
-                break;
-        }
+                    break;
+                case GUN:
+                    if(pUse > 0) {
+                        powerTouchOnMoleResponse();
+                        SoundManager.play(SoundManager.shot_pistol_final);
+                        pUse--;
+
+                        if(pUse <= 0) {
+                            stopPower();
+                        }
+                    }
+                    break;
+                case POISON:
+                    if(pUse > 0) {
+                        powerTouchOnHillResponse();
+                        SoundManager.play(SoundManager.poison_project);
+                        pUse--;
+                    }
+
+                    if(pUse <= 0)
+                        stopPower();
+                    break;
+                case ERASE:
+                    if(pUse > 0) {
+                        pTime = 0;
+                        pPowerTime = 1.5f;
+                        pUse--;
+                        SoundManager.play(SoundManager.eraser_final);
+                    }
+                    rubberSystem.onTouchDown();
+                    break;
+                case SCREWDIVER:
+                    if(pUse > 0) {
+                        screwdriverEffect(new Vector2(pGame.getTouchProcessor().getTouchX(),
+                                pGame.getTouchProcessor().getTouchY()), SCREWDRIVERS);
+
+                        pUse--;
+                    }
+                    break;
+                case LIGHTBOLT:
+                    if(pUse > 0) {
+                        powerTouchOnMoleResponse();
+                        SoundManager.play(SoundManager.thunder_final);
+                        pUse--;
+
+                        final Effect effect = new Effect(Container.pBoltFrame[0]);
+                        effect.setSize(BOLT_WIDTH, BOLT_WIDTH * 4);
+                        effect.setPosition(pGame.getTouchProcessor().getTouchX() - effect.getSprite().getWidth() / 2,
+                                GameScreen.H - pGame.getTouchProcessor().getTouchY());
+                        effect.setAnimation(new Animation(effect.getSprite(), 0.25f, 1, Container.pBoltFrame, 0, 2, 0) {
+                            @Override
+                            public void onAnimationFinished() {
+                                pGame.getEffectSystem().remove(effect);
+                            }
+                        });
+                        pGame.getEffectSystem().add(effect);
+
+                        if(pUse <= 0) {
+                            stopPower();
+                        }
+                    }
+                    break;
+                case WATER:
+                    if(pUse > 0) {
+                        powerTouchOnHillResponse();
+                        SoundManager.play(SoundManager.water_serving_final);
+                        pUse--;
+                    }
+
+                    if(pUse <= 0)
+                        stopPower();
+                    break;
+            }
     }
 
 
@@ -333,9 +333,7 @@ public class PowerManager {
         }
     }
 
-    private void stopPower(int p) {
-        System.out.println("STOP POWER:"+pPowerType+"/"+p);
-
+    private void stopPower() {
         pGame.getHud().showPowerBar();
         pGame.getHud().setIconsTouchable(true);
 
@@ -370,7 +368,7 @@ public class PowerManager {
     }
 
     private void powerTouchOnHillResponse() {
-        for(final Hill h : pGame.getHills()) {
+        for(Hill h : pGame.getHills()) {
             float distance = (float) Math.sqrt(Math.pow(pGame.getTouchProcessor().getTouchX() -
                     h.getPosition().x / GameScreen.METER_W * GameScreen.W, 2) +
                     Math.pow((GameScreen.H - pGame.getTouchProcessor().getTouchY()
@@ -380,28 +378,13 @@ public class PowerManager {
                 h.setPower(pPowerType);
 
                 if(pPowerType == PowerType.POISON)
-                {
                     SoundManager.play(SoundManager.poison_project);
-                    new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            try {
-                                Thread.sleep((long) (10f*1000));
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }finally {
-                                h.removePower();
-                            }
-                        }
-                    }).start();
-                }
 
                 if(pPowerType == PowerType.ERASE)
                     erasedHills++;
 
                 break;
-            }else
-                pUse++;
+            }
         }
     }
 
@@ -416,7 +399,7 @@ public class PowerManager {
             @Override
             public void onDisappearingFinished() {
                 if(pUse <= 0) {
-                    stopPower(6);
+                    stopPower();
                 }
 
                 if(leftEffects > 1) {
@@ -441,7 +424,7 @@ public class PowerManager {
                 powerTouchOnMoleResponse();
 
                 if(pUse <= 0) {
-                    stopPower(7);
+                    stopPower();
                 }
 
                 if(leftEffects > 1) {

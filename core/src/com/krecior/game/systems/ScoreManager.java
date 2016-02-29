@@ -91,12 +91,12 @@ public class ScoreManager {
     }
 
     public void addBadThrowMole(Mole m) {
-        if(!m.isKilled())
+        if (!m.isKilled())
             increaseKilledMoles();
         m.setKilled(true);
         points += 25;
 
-        if(game.isDeathmatch()) {
+        if (game.isDeathmatch()) {
             game.getDeathmatchManager().lives -= 0.1f;
         }
     }
