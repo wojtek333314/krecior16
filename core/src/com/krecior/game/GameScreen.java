@@ -222,10 +222,10 @@ public class GameScreen implements Screen {
 
 		pBodyToDispose = new CopyOnWriteArrayList<Body>();
 
-        if(deathmatch)
-		for(int j = 0; j < 2; j++)
-			for(int i = 0; i < PowerType.values().length-2; i++)
-				getPowerManager().addPower(PowerType.values()[i]);
+        //if(deathmatch)
+		//for(int j = 0; j < 2; j++)
+		//	for(int i = 0; i < PowerType.values().length-2; i++)
+		//		getPowerManager().addPower(PowerType.values()[i]);
 
 	    pInputMultiplexer.addProcessor(pTouchProcessor = new TouchProcessor(this));
 		pInputMultiplexer.addProcessor(pHud.getStage());

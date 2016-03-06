@@ -20,8 +20,8 @@ public class Animation {
 	private TextureRegion[] pTextureRegions;
 	
 	private boolean isEndless = false;
-	
-	private float pTimeOfLoop;
+
+	protected float pTimeOfLoop;
 	private float pCurrentTime = 0;
 	private float pRotation = 0;
 	

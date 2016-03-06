@@ -17,13 +17,8 @@ import com.krecior.utils.Container;
 import com.krecior.utils.UserData;
 
 public class Mole {
-	// ===========================================================
-	// Constants
-	// ===========================================================
-
-	public static final float BORN_TIME = 1.85f;
 	public static float SPAWN_TIME =
-            Container.pLvlsData[GameScreen.pGame.getMap().getActualLevel()].spawnSpeed * BORN_TIME;
+            Container.pLvlsData[GameScreen.pGame.getMap().getActualLevel()].spawnSpeed;
 	public static final float GRAB_TIME = 1.25f;
 	public static final float MIN_SPEED = 0.02f;
 	public static final float GRAPHIC_SIZE = 1.2f * GameScreen.PLAY_FIELD_WIDTH * GameScreen.METER_W / GameScreen.COLUMNS;
@@ -34,10 +29,6 @@ public class Mole {
             Container.pLvlsData[GameScreen.pGame.getMap().getActualLevel()].runSpeed;
 	public static final float MOLE_STEP_TIME = 1f;
 
-	// ===========================================================
-	// Fields
-	// ===========================================================
-	
 	private Body pBody;
 	
 	private Sprite pSprite;
@@ -61,10 +52,6 @@ public class Mole {
 	
 	public int ID = 0;
 
-	// ===========================================================
-	// Constructors
-	// ===========================================================
-
 	public Mole(int mID) {
 		ID = mID;
 
@@ -72,10 +59,6 @@ public class Mole {
 		createSprite();
 	}
 
-	// ===========================================================
-	// Getter & Setter
-	// ===========================================================
-	
 	public void setAngularVelocity(float mAngularVelocity) {
 		pBody.setAngularVelocity(mAngularVelocity);
 	}
@@ -170,16 +153,6 @@ public class Mole {
 
 	public void setKilled(boolean b) { isKilled = b; }
 
-	// ===========================================================
-	// Methods for/from SuperClass/Interfaces
-	// ===========================================================
-
-
-
-	// ===========================================================
-	// Methods
-	// ===========================================================
-	
 	private void createBody() {	
 		BodyDef pBodyDef = new BodyDef();
 		pBodyDef.type = BodyDef.BodyType.DynamicBody;
@@ -335,8 +308,4 @@ public class Mole {
 			pSprite.setPosition(pBody.getPosition().x / GameScreen.METER_W * GameScreen.W - pSprite.getWidth() / 2,
 								pBody.getPosition().y / GameScreen.METER_H * GameScreen.H - pSprite.getHeight() / 2);
 	}
-	
-	// ===========================================================
-	// Inner and Anonymous Classes
-	// ===========================================================
 }

@@ -9,16 +9,12 @@ import com.krecior.utils.Container;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class HillManager {
-    public static final float TIME = 2f;
-
     private CopyOnWriteArrayList<Hill> pHills;
     private GameScreen pGame;
     private SpriteBatch pSpriteBatch;
 
     private float pTime = 0;
     private int pMolehills = 0;
-
-
 
 
     public HillManager(GameScreen mGame) {
@@ -64,7 +60,6 @@ public class HillManager {
                 pTime = 0;
             }
         }
-
         renderHills();
         pTime += GameScreen.TIME_STEP;
     }

@@ -14,27 +14,13 @@ import com.krecior.utils.Container;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class MoleManager {
-    //===========================================================
-    //Constants
-    //===========================================================
-
     public static float WATER_THROW_SPEED = 4f;
 
-    //===========================================================
-    //Fields
-    //===========================================================
-
     private CopyOnWriteArrayList<Mole> pMoles;
-
     private GameScreen pGame;
-
     private SpriteBatch pSpriteBatch;
 
     private int pAllMoles;
-
-    //===========================================================
-    //Constructors
-    //===========================================================
 
     public MoleManager(GameScreen mGameScreen) {
         pGame = mGameScreen;
@@ -47,10 +33,6 @@ public class MoleManager {
             pMoles.add(new Mole(i));
 
     }
-
-    //===========================================================
-    //Getter & Setter
-    //===========================================================
 
     public int getGrabbedMole() {
         for(int i = 0; i < getMoles().size(); i++)
@@ -66,19 +48,28 @@ public class MoleManager {
         return pMoles;
     }
 
-    //===========================================================
-    //Methods for/from SuperClass/Interfaces
-    //===========================================================
+    private boolean molesOnMap() {
+        for(Mole m : pMoles) {
+            boolean x_ = isInSection((1f - GameScreen.PLAY_FIELD_WIDTH) * GameScreen.W / 2
+                    , GameScreen.W / 2 + GameScreen.PLAY_FIELD_WIDTH * GameScreen.W / 2,
+                    m.getPosition().x / GameScreen.METER_W * GameScreen.W);
+            boolean y_ = isInSection(GameScreen.PLAY_FIELD_BOT_GAP * GameScreen.H
+                    , (GameScreen.PLAY_FIELD_TOP_GAP + GameScreen.PLAY_FIELD_BOT_GAP) * GameScreen.H
+                    , m.getPosition().y / GameScreen.METER_H * GameScreen.H);
 
+            return x_ && y_;
+        }
+        return false;
+    }
 
-
-    //===========================================================
-    //Methods
-    //===========================================================
+    private boolean isInSection(float limA, float limB, float value) {
+        return value >= limA && value <= limB;
+    }
 
     public void manage() {
         if(!pGame.isDeathmatch())
-        if((pGame.getScoreManager().getKilledMoles() + pGame.getScoreManager().getDeserters()
+        if(!molesOnMap() && (pGame.getScoreManager().getKilledMoles()
+                + pGame.getScoreManager().getDeserters()
                 + pGame.getScoreManager().getDestroyedTargets() >= pAllMoles &&
                 !pGame.getHud().isEnd()) || pGame.getHillManager().getHills().size() < 1) {
             pGame.getHud().showEnd();
@@ -108,9 +99,11 @@ public class MoleManager {
                                 final Effect effect = new Effect(Container.pWaterFrame[0]);
                                 SoundManager.play(SoundManager.splash_final);
                                 effect.setSize(PowerManager.WATER_SIZE, PowerManager.WATER_SIZE);
-                                effect.setPosition(h.getPosition().x / GameScreen.METER_W * GameScreen.W - PowerManager.WATER_SIZE / 2,
+                                effect.setPosition(h.getPosition().x / GameScreen.METER_W
+                                                * GameScreen.W - PowerManager.WATER_SIZE / 2,
                                         h.getPosition().y / GameScreen.METER_H * GameScreen.H);
-                                effect.setAnimation(new Animation(effect.getSprite(), 1f, 1, Container.pWaterFrame, 0, 14, 0) {
+                                effect.setAnimation(new Animation(effect.getSprite(), 1f
+                                        , 1, Container.pWaterFrame, 0, 14, 0) {
                                     @Override
                                     public void onAnimationFinished() {
                                         pGame.getEffectSystem().remove(effect);
@@ -139,11 +132,12 @@ public class MoleManager {
                     m.getBody().setActive(true);
 
                     if(m.getAnimation() == null) {
-                        m.setAnimation(new Animation(m.getSprite(), 0.1351f * (1.85f - (Mole.SPAWN_TIME - 1.85f)), 1,
+                        m.setAnimation(new Animation(m.getSprite()
+                                , 0.1351f * Math.abs((1.85f - (Mole.SPAWN_TIME - 1.85f))), 1,
                                 Container.pMoleFrame, 0, 2, m.getAngle()) {
                             @Override
                             public void onAnimationRunning() {
-                                float size = (pTime + 0.054f * Mole.SPAWN_TIME) / (0.1351f * Mole.SPAWN_TIME)
+                                float size = (pTime / pTimeOfLoop) / (Mole.SPAWN_TIME)
                                         * Mole.GRAPHIC_SIZE / GameScreen.METER_W * GameScreen.W;
 
                                 m.getSprite().setSize(size, size);
@@ -153,10 +147,14 @@ public class MoleManager {
 
                             @Override
                             public void onAnimationFinished() {
-                                m.setAnimation(new Animation(m.getSprite(), 0.054f * (1.85f - (Mole.SPAWN_TIME - 1.85f)), 1, Container.pMoleFrame, 0, 2, m.getAngle()) {
+                                System.out.println("PIERWSZA ZAKONCZONA");
+                                m.setAnimation(new Animation(m.getSprite()
+                                        , 0.054f * (1.85f - (Mole.SPAWN_TIME - 1.85f)), 1
+                                        , Container.pMoleFrame, 0, 2, m.getAngle()) {
                                     @Override
                                     public void onAnimationRunning() {
-                                        float size = (1f + 0.054f * Mole.SPAWN_TIME - pTime) * Mole.GRAPHIC_SIZE / GameScreen.METER_W * GameScreen.W;
+                                        float size = (1f + 0.054f * Mole.SPAWN_TIME - pTime)
+                                                * Mole.GRAPHIC_SIZE / GameScreen.METER_W * GameScreen.W;
 
                                         m.getSprite().setSize(size, size);
                                         m.updateSpritePosition();
@@ -183,8 +181,8 @@ public class MoleManager {
                     m.setAngularVelocity(0);
 
                     if(m.getAnimation() == null) {
-
-                        m.setAnimation(new Animation(m.getSprite(), 0.81f * Mole.SPAWN_TIME, 1, Container.pMoleFrame, 0, 2, m.getAngle()) {
+                        m.setAnimation(new Animation(m.getSprite(), 0.81f / Mole.SPAWN_TIME, 1
+                                , Container.pMoleFrame, 0, 2, m.getAngle()) {
                             @Override
                             public void onAnimationFinished() {
                                 m.updateSpritePosition();
@@ -214,11 +212,14 @@ public class MoleManager {
                 case GRABBED:
                     int a = getGrabbedMole();
                     if(a >= 0) {
-                        pMoles.get(a).setPosition(pGame.getTouchProcessor().getTouchX() / GameScreen.W * GameScreen.METER_W,
-                                (GameScreen.H - pGame.getTouchProcessor().getTouchY()) / GameScreen.H * GameScreen.METER_H, 0);
+                        pMoles.get(a).setPosition(pGame.getTouchProcessor().getTouchX()
+                                / GameScreen.W * GameScreen.METER_W,
+                                (GameScreen.H - pGame.getTouchProcessor().getTouchY())
+                                / GameScreen.H * GameScreen.METER_H, 0);
 
                         if(m.getAnimation() == null) {
-                            m.setAnimation(new Animation(m.getSprite(), Mole.GRAB_TIME, 5, Container.pMoleFrame, 8, 9, m.getAngle()) {
+                            m.setAnimation(new Animation(m.getSprite(), Mole.GRAB_TIME
+                                    , 5, Container.pMoleFrame, 8, 9, m.getAngle()) {
                                 @Override
                                 public void onAnimationFinished() {
                                     m.stopAnimation();
@@ -229,7 +230,8 @@ public class MoleManager {
 
                     break;
                 case FLY:
-                    if(Math.abs(m.getLinearVelocity().x) <= Mole.MIN_SPEED && Math.abs(m.getLinearVelocity().y) <= Mole.MIN_SPEED && !m.pScaling) {
+                    if(Math.abs(m.getLinearVelocity().x) <= Mole.MIN_SPEED
+                            && Math.abs(m.getLinearVelocity().y) <= Mole.MIN_SPEED && !m.pScaling) {
                         m.setState(MoleState.STAY);
                     }
                     break;
@@ -267,7 +269,8 @@ public class MoleManager {
                 m.getSprite().setRegion(Container.pHammerScrewdriver[0]);
                 m.resetSpriteRotation();
                 m.setLinearVelocity(0, 0);
-                m.setAnimation(new Animation(m.getSprite(), 1f, 1, Container.pHammerScrewdriver, 0, 4, m.getAngle()) {
+                m.setAnimation(new Animation(m.getSprite(), 1f, 1, Container.pHammerScrewdriver
+                        , 0, 4, m.getAngle()) {
                     @Override
                     public void onAnimationFinished() {
                         m.stopAnimation();
@@ -290,7 +293,8 @@ public class MoleManager {
                 pGame.getScoreManager().killMole(m);
                 break;
             case POISON:
-                m.setAnimation(new Animation(m.getSprite(), 0.81f * Mole.SPAWN_TIME, 1, Container.pMoleFrame, 12, 12, m.getAngle()) {
+                m.setAnimation(new Animation(m.getSprite(), 0.81f * Mole.SPAWN_TIME, 1
+                        , Container.pMoleFrame, 12, 12, m.getAngle()) {
                     @Override
                     public void onAnimationFinished() {
                         m.stopAnimation();
@@ -316,7 +320,8 @@ public class MoleManager {
                 m.getSprite().setRegion(Container.pHammerScrewdriver[5]);
                 m.resetSpriteRotation();
                 m.setLinearVelocity(0, 0);
-                m.setAnimation(new Animation(m.getSprite(), 0.6f, 1, Container.pHammerScrewdriver, 5, 7, m.getAngle()) {
+                m.setAnimation(new Animation(m.getSprite(), 0.6f
+                        , 1, Container.pHammerScrewdriver, 5, 7, m.getAngle()) {
                     @Override
                     public void onAnimationFinished() {
                         m.stopAnimation();
@@ -368,7 +373,4 @@ public class MoleManager {
 
         pSpriteBatch.end();
     }
-    //===========================================================
-    //Inner and Anonymous Classes
-    //===========================================================
 }

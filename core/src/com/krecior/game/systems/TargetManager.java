@@ -75,9 +75,7 @@ public class TargetManager {
 	private void renderTargets() {
 		pSpriteBatch.begin();
 
-		for(Target t : pTargets) {
-			t.draw(pSpriteBatch);
-		}
+		for(Target t : pTargets) t.draw(pSpriteBatch);
 
 		pSpriteBatch.end();
 	}

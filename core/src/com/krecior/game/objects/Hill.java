@@ -9,18 +9,10 @@ import com.krecior.utils.Animation;
 import com.krecior.utils.Container;
 
 public class Hill {
-	//===========================================================
-	//Constants
-	//===========================================================
-
 	public static final float SIZE = 3f * GameScreen.PLAY_FIELD_WIDTH * GameScreen.METER_W / GameScreen.COLUMNS;
-	public static final float TIME_TO_OPEN = Mole.SPAWN_TIME * 1.1f;
     public static final float POWER_SCALE = 0.25f;
+    public static float TIME_TO_OPEN = 2f / Mole.SPAWN_TIME;
 
-	//===========================================================
-	//Fields
-	//===========================================================
-	
 	private Animation pAnimation;
 	
 	private Sprite pSprite;
@@ -38,20 +30,12 @@ public class Hill {
     private boolean isPowerAppearing = false;
     private boolean isSpriteDisappearing = false;
 
-	//===========================================================
-	//Constructors
-	//===========================================================
-
 	public Hill(Vector2 mPosition) {
 		pPosition = mPosition;
 		
 		createSprite();
 		setAnimation(new Animation(pSprite, 1f, 1, Container.pMolehill, 0, 14, 0));
 	}
-	
-	//===========================================================
-	//Getter & Setter
-	//===========================================================
 
 	public Vector2 getPosition() { return pPosition; }
 
@@ -89,17 +73,7 @@ public class Hill {
 	public void setTime(float mTime) {
 		pTime = mTime;
 	}
-	
-	//===========================================================
-	//Methods for/from SuperClass/Interfaces
-	//===========================================================
 
-
-
-	//===========================================================
-	//Methods
-	//===========================================================
-	
 	private void createSprite() {
 		pSprite = new Sprite(Container.pMolehill[15]);
 		pSprite.setSize(SIZE / GameScreen.METER_W * GameScreen.W, SIZE / GameScreen.METER_W * GameScreen.W);
@@ -181,8 +155,4 @@ public class Hill {
             GameScreen.pGame.getHillManager().getHills().remove(this);
         }
     }
-
-	//===========================================================
-	//Inner and Anonymous Classes
-	//===========================================================
 }

@@ -53,24 +53,11 @@ public class ScoreManager {
 
     public void manage() {
         if(checking) {
-           /// System.out.println("killedMoles: " + killedMoles);
-           // System.out.println("destroyedTargets: " + destroyedTargets);
-           // System.out.println("deserters: " + deserters);
-
             result = (float)(killedMoles + destroyedTargets) / game.getMoleManager().getAllMoles();
-           // System.out.println("result: " + result);
-
-            if (result >= 0.4f)
-                endDiamonds = 1;
-
-            if (result >= 0.6f)
-                endDiamonds = 2;
-
-            if (result >= 0.8f)
-                endDiamonds = 3;
-
-            if (result >= 0.4f && game.getHillManager().getHills().size() == 0)
-                endDiamonds = 1;
+            if (result >= 0.4f) endDiamonds = 1;
+            if (result >= 0.6f) endDiamonds = 2;
+            if (result >= 0.8f) endDiamonds = 3;
+            if (result >= 0.4f && game.getHillManager().getHills().size() == 0) endDiamonds = 1;
         }
     }
 

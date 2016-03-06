@@ -46,6 +46,9 @@ public class Container {
 	public static TextureRegion pPause;
 	public static TextureRegion pRepeat;
 	public static TextureRegion pChoose;
+	public static TextureRegion heart;
+	public static TextureRegion top_position;
+	public static TextureRegion enter_label;
 
     public static TextureRegion[] chooseGameBlurBackground;
 	public static TextureRegion[] pButton;
@@ -82,6 +85,9 @@ public class Container {
 		pRepeat = getTextureRegion("gfx/repeat.png");
 		pChoose = getTextureRegion("gfx/choose.png");
         killedMoleIcon = getTextureRegion("gfx/killed_mole.png");
+		heart = getTextureRegion("gfx/heart.png");
+		top_position = getTextureRegion("gfx/top_position.png");
+		enter_label = Container.getTextureRegion("gfx/msgBox/score_label.png");
 
 		soundOff = getTextureRegion("gfx/sound_icon_off.png");
 		soundOn = getTextureRegion("gfx/sound_icon_on.png");

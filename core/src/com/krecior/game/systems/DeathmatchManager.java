@@ -12,13 +12,13 @@ public class DeathmatchManager {
     public static final float MOLE_SPAWN_RISE = 1f / 100f;
     public static final float NEW_HILL_TIME = 10f;
 
-
     private GameScreen gameScreen;
 
     private float time = 0;
     private float hillTime = 10;
+    private boolean afterEnd = false;
 
-    public float lives = 20;
+    public float lives = 20f;
 
     public DeathmatchManager(GameScreen gameScreen) {
         this.gameScreen = gameScreen;
@@ -31,13 +31,10 @@ public class DeathmatchManager {
         if(time >= 1f) {
             Mole.SPAWN_TIME += MOLE_SPAWN_RISE;
             Mole.WALK_SPEED += MOLE_SPEED_RISE;
+            Hill.TIME_TO_OPEN = 2f / Mole.SPAWN_TIME;
 
             hillTime += 1f;
             time = 0f;
-
-            System.out.println("SPEED: " + Mole.WALK_SPEED);
-            System.out.println("SPAWN: " + Mole.SPAWN_TIME);
-            System.out.println("LIVES: " + lives);
         }
 
         if(hillTime >= NEW_HILL_TIME) {
@@ -46,8 +43,9 @@ public class DeathmatchManager {
             hillTime = 0f;
         }
 
-        if(lives <= 0f) {
-            //TODO end screen
+        if(lives <= 0f && !afterEnd) {
+            gameScreen.getHud().popUpDMend();
+            afterEnd = true;
         }
     }
 

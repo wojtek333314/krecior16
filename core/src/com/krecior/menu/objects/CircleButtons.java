@@ -9,20 +9,13 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.krecior.Manager;
+import com.krecior.game.GameScreen;
+import com.krecior.menu.MainScreen;
 import com.krecior.menu.ScreenType;
 import com.krecior.sound.SoundManager;
 import com.krecior.utils.Container;
 
 public class CircleButtons extends Group {
-    //===========================================================
-    //Constants
-    //===========================================================
-
-
-    //===========================================================
-    //Fields
-    //===========================================================
-
     private Image[] circleButton;
 
     private TextureRegion[] pTextureRegion;
@@ -33,10 +26,6 @@ public class CircleButtons extends Group {
     public float pButtonSize;
     public float pGroupRadius;
     public float pActualRadian = 0;
-
-    //===========================================================
-    //Constructors
-    //===========================================================
 
     /**
      * @param mNumberOfButtons
@@ -52,20 +41,6 @@ public class CircleButtons extends Group {
 
         showButtons();
     }
-
-    //===========================================================
-    //Getter & Setter
-    //===========================================================
-
-
-    //===========================================================
-    //Methods for/from SuperClass/Interfaces
-    //===========================================================
-
-
-    //===========================================================
-    //Methods
-    //===========================================================
 
     private void showButtons() {
         float actualRadian = 0;
@@ -118,7 +93,7 @@ public class CircleButtons extends Group {
     private void changeScreen(int mButtonNumber) {
         switch (mButtonNumber) {
             case 0:
-                Manager.manager.changeScreen(ScreenType.CHOOSE_STAGE);
+                MainScreen.choose.setPosition(GameScreen.W / 2, GameScreen.H / 2);
                 break;
             case 1:
                 Manager.manager.changeScreen(ScreenType.ITEMSHOP);
@@ -167,9 +142,4 @@ public class CircleButtons extends Group {
             SoundManager.mute();
         }
     }
-    //===========================================================
-    //Inner and Anonymous Classes
-    //===========================================================
-
-
 }

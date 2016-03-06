@@ -4,14 +4,17 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.krecior.BaseScreen;
 import com.krecior.Manager;
+import com.krecior.game.GameScreen;
 import com.krecior.game.enums.PowerType;
 import com.krecior.menu.objects.CircleButtons;
 import com.krecior.menu.objects.MenuMsgBox;
+import com.krecior.menu.socialNetwork.ChooseGameMode;
 import com.krecior.sound.SoundManager;
 import com.krecior.utils.Container;
 import com.krecior.utils.Data;
@@ -20,6 +23,7 @@ public class MainScreen extends BaseScreen {
 	private final static int BUTTONS = 7;
     private Stage mainStage;
 	private CircleButtons pCircleButtons;
+    public static ChooseGameMode choose;
 
     private Image pLogo;
 
@@ -32,9 +36,10 @@ public class MainScreen extends BaseScreen {
     public MainScreen() {
         mainStage = new Stage();
         setMainStage(mainStage);
-        Manager.inputMultiplexer.addProcessor(mainStage);
         if(!SoundManager.mainSound.isPlaying())
             SoundManager.play(SoundManager.mainSound);
+
+        Manager.inputMultiplexer.addProcessor(mainStage);
     }
 
 	private void showBackground() {
@@ -50,16 +55,16 @@ public class MainScreen extends BaseScreen {
         Image pBackgroundBorder = new Image(Container.pBorder);
 		pBackgroundBorder.setSize(W, H);
 		pBackgroundBorder.setPosition(0, 0);
+        pBackgroundBorder.addListener(new InputListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                choose.setPosition(GameScreen.W * 2, GameScreen.H * 2);
+                return false;
+            }
+        });
 
 		pLogo = new Image(Container.pMolesWarLogo);
 		pLogo.setSize(pLogoSize, pLogoSize * Container.pMolesWarLogo.getRegionHeight() / Container.pMolesWarLogo.getRegionWidth());
-		pLogo.addListener(new ClickListener() {
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                Manager.manager.startLevel(Container.pLvlsData.length - 1);
-                return true;
-            }
-        });
 
         mainStage.addActor(pBackground);
         mainStage.addActor(pBackgroundClouds);
@@ -172,6 +177,10 @@ public class MainScreen extends BaseScreen {
 
 		showBackground();
 		showButtons();
+
+        choose = new ChooseGameMode();
+        mainStage.addActor(choose);
+        choose.setPosition(GameScreen.W * 2, GameScreen.H * 2);
 
 		pLogo.setPosition(W / 2 - pLogo.getWidth() / 2, (H + pCircleButtons.getY() + pCircleButtons.getHeight()) / 2);
 	}

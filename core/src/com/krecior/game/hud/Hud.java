@@ -11,15 +11,12 @@ import com.krecior.game.GameScreen;
 import com.krecior.game.enums.PowerType;
 import com.krecior.game.hud.TextLabel.Font;
 import com.krecior.game.objects.Mole;
+import com.krecior.menu.ranking.Rank;
 import com.krecior.utils.Container;
 
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Hud extends Group {
-    //===========================================================
-    //Constants
-    //===========================================================
-
     public static final float LEFT_LABEL_W = 0.25f * GameScreen.W;
     public static final float RIGHT_LABEL_W = 0.4f * GameScreen.W;
     public static final float LABEL_HEIGHT = 0.1f * GameScreen.H;
@@ -30,10 +27,6 @@ public class Hud extends Group {
     public static final float DIAMOND_SIZE = 0.08f * GameScreen.W;
 
     public static final int BUTTONS = 4;
-
-    //===========================================================
-    //Fields
-    //===========================================================
 
     private SpriteBatch pSpriteBatch;
 
@@ -60,6 +53,9 @@ public class Hud extends Group {
 
     private EndButton pEndButton;
     private PauseButtons pPauseButtons;
+    private DMHearts dmHearts;
+    private DMEnd dmEnd;
+    private Rank rank;
 
     private TextureRegion[] pPauseTextures;
     private Sprite[] diamonds;
@@ -75,9 +71,6 @@ public class Hud extends Group {
 
     private float counterAlpha = 0f;
     private float pauseAlpha = 1f;
-    //===========================================================
-    //Constructors
-    //===========================================================
 
     public Hud(GameScreen mGame) {
         pGame = mGame;
@@ -100,15 +93,17 @@ public class Hud extends Group {
         createSolidSprites();
         createCounters();
         createPowerIcons();
+        createRank();
 
         values = new TextLabel[3];
         if(pGame.isDeathmatch())
             createObjectValues();
+
+        if(mGame.isDeathmatch()) {
+            createDM();
+        }
     }
 
-    //===========================================================
-    //Getter & Setter
-    //===========================================================
 
     public void setIconsTouchable(boolean mIconsTouchable) {
         isIconsTouchable = mIconsTouchable;
@@ -117,10 +112,6 @@ public class Hud extends Group {
     public Stage getStage() { return stage; }
 
     public boolean isEnd() { return isEnd; }
-
-    //===========================================================
-    //Methods for/from SuperClass/Interfaces
-    //===========================================================
 
     public void onTouchDown(float mX, float mY) {
         if(pGame.TIME_STEP != 0) {
@@ -160,9 +151,27 @@ public class Hud extends Group {
 
     }
 
-    //===========================================================
-    //Methods
-    //===========================================================
+    private void createRank() {
+        rank = new Rank(pGame);
+        rank.hide();
+        stage.addActor(rank);
+    }
+
+    public void popUpRank() { rank.popUp(); }
+
+    private void createDM() {
+        dmHearts = new DMHearts(pGame);
+        dmHearts.setPosition(0, DMHearts.TOP_Y);
+        stage.addActor(dmHearts);
+
+        dmEnd = new DMEnd(pGame);
+        dmEnd.hide();
+        stage.addActor(dmEnd);
+    }
+
+    public void hideDMend() { dmEnd.hide(); }
+
+    public void popUpDMend() { dmEnd.popUp(); }
 
     private void createObjectValues() {
         for(int i = 0; i < values.length; i++) {
@@ -403,8 +412,10 @@ public class Hud extends Group {
                 pRightLabel.getY() + pRightLabel.getHeight() * 0.25f + pDiamonds.getHeight() / 2);
         pDiamonds.draw(pSpriteBatch, 1f);
 
-        if(pGame.isDeathmatch())
-            refreshValues();
+        if(pGame.isDeathmatch()) {
+            //refreshValues();
+            dmHearts.refresh(pGame.getDeathmatchManager().lives);
+        }
 
         if(isCounterDisappering) {
             counterAlpha -= Gdx.graphics.getDeltaTime();
@@ -466,6 +477,7 @@ public class Hud extends Group {
         }
 
         pEndButton.draw();
+
         stage.act();
         stage.draw();
 
@@ -548,8 +560,4 @@ public class Hud extends Group {
         showPowerBar();
         appearPause();
     }
-
-    //===========================================================
-    //Inner and Anonymous Classes
-    //===========================================================
 }
