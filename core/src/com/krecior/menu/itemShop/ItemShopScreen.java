@@ -255,7 +255,7 @@ public class ItemShopScreen extends Stage implements Screen {
     }
 
     private void exampleOfRanking(){
-        Manager.rankingFacade.getPlayersRankingDependsOnNick("wojtaus", new ServerRequestListener() {
+        Manager.rankingFacade.getPlayersRankingDependsOnNick("wojtaus",10, new ServerRequestListener() {
             @Override
             public void onSuccess(String json) {
                 System.out.println(json);//wyswietlam odpowiedz serwera

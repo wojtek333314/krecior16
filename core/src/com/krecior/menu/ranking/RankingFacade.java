@@ -8,5 +8,5 @@ import com.krecior.utils.ServerRequestListener;
 public interface RankingFacade {
     void registerNick(String nick,ServerRequestListener listener);
     void registerPoints(String nick,int points,ServerRequestListener listener);
-    void getPlayersRankingDependsOnNick(String nick, ServerRequestListener listener);
+    void getPlayersRankingDependsOnNick(String nick,int listSize, ServerRequestListener listener);
 }

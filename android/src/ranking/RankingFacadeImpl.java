@@ -35,7 +35,7 @@ public class RankingFacadeImpl {
      * @param nick
      * @param listener
      */
-    public void getPlayersListDependOnNick(String nick,ServerRequestListener listener){
-        new GetList(nick,listener);
+    public void getPlayersListDependOnNick(String nick,int listSize,ServerRequestListener listener){
+        new GetList(nick,Integer.toString(listSize),listener);
     }
 }

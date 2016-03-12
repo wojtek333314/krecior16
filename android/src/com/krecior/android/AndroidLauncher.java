@@ -56,8 +56,8 @@ public class AndroidLauncher extends AndroidApplication {
             }
 
             @Override
-            public void getPlayersRankingDependsOnNick(String nick, ServerRequestListener listener) {
-                rankingFacadeImplementation.getPlayersListDependOnNick(nick, listener);
+            public void getPlayersRankingDependsOnNick(String nick,int listSize, ServerRequestListener listener) {
+                rankingFacadeImplementation.getPlayersListDependOnNick(nick,listSize, listener);
             }
         };
         facebookPluginListener = new FacebookPluginListener() {
