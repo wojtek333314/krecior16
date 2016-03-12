@@ -138,10 +138,10 @@ idea {
 repositories { mavenCentral() }
 
 dependencies {
-    compile 'com.facebook.android:facebook-android-sdk:4.6.0'
     compile files('libs/gdx-pay-android-0.5.0-library.jar')
     compile files('libs/gdx-pay-android-openiab-0.5.0-library.jar')
     compile files('libs/gdx-pay-android-ouya-0.5.0-library.jar')
-    compile 'com.google.android.gms:play-services-ads:8.1.0'
+    compile 'com.facebook.android:facebook-android-sdk:4.6.0'
+    compile 'com.google.android.gms:play-services-ads:8.4.0'
 }
 

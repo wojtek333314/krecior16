@@ -31,7 +31,7 @@ public class LevelButton extends Actor{
             this.background = new Image(Container.pEmptyButton);
         else
             this.background = new Image(Container.pButton[1]);
-        this.background.setSize(Gdx.graphics.getWidth() * 0.22f, Gdx.graphics.getWidth() * 0.22f);
+        this.background.setSize(Gdx.graphics.getWidth() * 0.20f, Gdx.graphics.getWidth() * 0.20f);
         radius = 0.4f * background.getWidth() - background.getWidth()*0.12f/2;
 
         textLabel = new TextLabel(Container.getFont(10),Integer.toString(level+1),2);

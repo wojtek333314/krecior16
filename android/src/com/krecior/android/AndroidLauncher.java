@@ -44,20 +44,20 @@ public class AndroidLauncher extends AndroidApplication {
 
         facebookPluginAndroid = new FacebookPluginAndroid(this);
         rankingFacadeImplementation = new RankingFacadeImpl();
-        rankingFacade = new RankingFacade(){
+        rankingFacade = new RankingFacade() {
             @Override
             public void registerNick(String nick, ServerRequestListener listener) {
-                rankingFacadeImplementation.registerNick(nick,listener);
+                rankingFacadeImplementation.registerNick(nick, listener);
             }
 
             @Override
             public void registerPoints(String nick, int points, ServerRequestListener listener) {
-                rankingFacadeImplementation.registerPoints(nick,points,listener);
+                rankingFacadeImplementation.registerPoints(nick, points, listener);
             }
 
             @Override
             public void getPlayersRankingDependsOnNick(String nick, ServerRequestListener listener) {
-                rankingFacadeImplementation.getPlayersListDependOnNick(nick,listener);
+                rankingFacadeImplementation.getPlayersListDependOnNick(nick, listener);
             }
         };
         facebookPluginListener = new FacebookPluginListener() {
@@ -171,7 +171,7 @@ public class AndroidLauncher extends AndroidApplication {
                     });
                 }
             }
-        },rankingFacade);
+        }, rankingFacade);
         config = new AndroidApplicationConfiguration();
         ServerMultiTaskManager serverMultiTaskManager = null;
 
@@ -220,8 +220,7 @@ public class AndroidLauncher extends AndroidApplication {
         }
 
 
-
-        if (Manager.DEVELOPER_VERSION && serverMultiTaskManager!=null) {
+        if (Manager.DEVELOPER_VERSION && serverMultiTaskManager != null) {
             for (int i = 1; i < 46; i++) {
                 final int q = i;
                 serverMultiTaskManager.addDownloadTask(new DownloadFile(Integer.toString(i)) {
@@ -269,10 +268,11 @@ public class AndroidLauncher extends AndroidApplication {
             Object value = data.getExtras().get(key);
         }
         Bundle b = data.getExtras().getBundle("com.facebook.platform.protocol.RESULT_ARGS");
-        for (String key : b.keySet()) {
-            Object value = b.get(key);
-         }
-         facebookPluginAndroid.getCallbackManager().onActivityResult(requestCode, resultCode, data);
+        if (b != null && b.keySet() != null)
+            for (String key : b.keySet()) {
+                Object value = b.get(key);
+            }
+        facebookPluginAndroid.getCallbackManager().onActivityResult(requestCode, resultCode, data);
     }
 
     public void setupAds() {

@@ -44,6 +44,7 @@ public class TextLabel extends Actor {
     public TextLabel(BitmapFont bitmapFont, String text) {
         this.bitmapFont = bitmapFont;
         this.text = text;
+        glyphLayout.setText(bitmapFont, text);
     }
 
     public TextLabel(BitmapFont bitmapFont, String text, int lineWidth) {
@@ -54,14 +55,6 @@ public class TextLabel extends Actor {
         glyphLayout.setText(bitmapFont, text, 0, text.length(), bitmapFont.getColor(), lineWidth, Align.left, true, null);
     }
 
-    public TextLabel(BitmapFont bitmapFont, String text, int lineWidth, int align) {
-        this.bitmapFont = bitmapFont;
-        this.text = text;
-        this.wrap = true;
-        this.align = align;
-        this.lineWidth = lineWidth;
-        glyphLayout.setText(bitmapFont, text, 0, text.length(), bitmapFont.getColor(), lineWidth, align, true, null);
-    }
 
     public void setAlign(int align) {
         this.align = align;
@@ -104,8 +97,6 @@ public class TextLabel extends Actor {
 
     @Override
     public float getWidth() {
-        if(wrap)
-            return lineWidth;
         return glyphLayout.width;
     }
 

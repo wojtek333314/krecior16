@@ -9,10 +9,10 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.krecior.game.GameScreen;
 import com.krecior.game.enums.PowerType;
-import com.krecior.game.hud.TextLabel.Font;
 import com.krecior.game.objects.Mole;
 import com.krecior.menu.ranking.Rank;
 import com.krecior.utils.Container;
+import com.krecior.utils.TextLabel;
 
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -175,7 +175,7 @@ public class Hud extends Group {
 
     private void createObjectValues() {
         for(int i = 0; i < values.length; i++) {
-            values[i] = new TextLabel(TextLabel.Font.ROBOTO, " ", 0, 0);
+            values[i] = new TextLabel(Container.getFont(10), " ");
             values[i].setPosition(0, -0.2f * GameScreen.H + GameScreen.H - i * 0.05f * GameScreen.H);
         }
     }
@@ -247,24 +247,24 @@ public class Hud extends Group {
     }
 
     private void createCounters() {
-        pMoles = new TextLabel(Font.ROBOTO, Integer.toString(pGame.getMoleManager().getAllMoles()
-                - pGame.getScoreManager().getBorn()), 0, 0);
+        pMoles = new TextLabel(Container.getFont(10), Integer.toString(pGame.getMoleManager().getAllMoles()
+                - pGame.getScoreManager().getBorn()));
         pMoles.setPosition(pLeftLabel.getX() + pLeftLabel.getWidth() / 2 - pMoles.getWidth() / 2,
                 pLeftLabel.getY() + pLeftLabel.getHeight() * 0.25f + pMoles.getHeight() / 2);
 
-        pScore = new TextLabel(Font.ROBOTO, "Score:", 0, 0);
+        pScore = new TextLabel(Container.getFont(10), "Score:");
         pScore.setPosition(pScore.getWidth() + pRightLabel.getX() + pRightLabel.getWidth() * 0.05f,
                 -pScore.getHeight() / 2 + pRightLabel.getY() + pRightLabel.getHeight() * 0.75f + pScore.getHeight() / 2);
 
-        pKilledMoles = new TextLabel(Font.ROBOTO, " ", 0, 0);
+        pKilledMoles = new TextLabel(Container.getFont(10), " ");
         pKilledMoles.setPosition(-pKilledMoles.getWidth() / 2 + pMiddleLabel.getX() + pMiddleLabel.getWidth() * 0.33f,
                 pMiddleLabel.getY() + pMiddleLabel.getHeight() * 0.75f);
 
-        pPoints = new TextLabel(Font.ROBOTO, Integer.toString(pGame.getScoreManager().getPoints()), 0, 0);
+        pPoints = new TextLabel(Container.getFont(10), Integer.toString(pGame.getScoreManager().getPoints()));
         pPoints.setPosition(pPoints.getWidth() + pRightLabel.getX() + pRightLabel.getWidth() * 0.95f - pMoles.getWidth(),
                 pPoints.getHeight() + pRightLabel.getY() + pRightLabel.getHeight() * 0.75f + pMoles.getHeight() / 2);
 
-        pDiamonds = new TextLabel(Font.ROBOTO, Integer.toString(pGame.getScoreManager().getDiamonds()), 0, 0);
+        pDiamonds = new TextLabel(Container.getFont(10), Integer.toString(pGame.getScoreManager().getDiamonds()));
         pDiamonds.setPosition(pRightLabel.getX() + pRightLabel.getWidth() * 0.95f - pDiamonds.getWidth(),
                 pRightLabel.getY() + pRightLabel.getHeight() * 0.25f + pDiamonds.getHeight() / 2);
 
@@ -275,7 +275,7 @@ public class Hud extends Group {
                 pRightLabel.getY() - pPowerCounterLabel.getHeight());
         pPowerCounterLabel.setAlpha(counterAlpha);
 
-        pPowerCounter = new TextLabel(Font.ROBOTO, Integer.toString(pGame.getScoreManager().getDiamonds()), 0, 0);
+        pPowerCounter = new TextLabel(Container.getFont(10), Integer.toString(pGame.getScoreManager().getDiamonds()));
         pPowerCounter.setPosition(pPowerCounterLabel.getX() + (pPowerCounterLabel.getWidth() - pPowerCounter.getWidth()) / 2,
                 pPowerCounterLabel.getY() + (pPowerCounterLabel.getHeight() + pPowerCounter.getHeight()) / 2);
     }

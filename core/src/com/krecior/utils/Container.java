@@ -140,11 +140,9 @@ public class Container {
 	public static TextureRegion getTextureRegion(String filePath) {
 		TextureRegion ret = textureRegionList.get(filePath);
 		if(ret != null){
-			System.out.println("Z PAMIECI POBRANO!  "+filePath);
 			return ret;
 		}else
 		{
-			System.out.println("UTWORZONO TEXTURE!  "+filePath);
 			Texture t = new Texture(Gdx.files.internal(filePath));
 			t.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 			ret = new TextureRegion(t, 0, 0, t.getWidth(), t.getHeight());
@@ -174,11 +172,7 @@ public class Container {
 		FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
 		parameter.color = Color.FIREBRICK;
 		parameter.size = size * (Gdx.graphics.getWidth() / Gdx.graphics.getHeight());
-		parameter.characters = FreeTypeFontGenerator.DEFAULT_CHARS
-				+ "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ"
-				+ "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ".toLowerCase()
-				+ "ãáàâçéêíõóôúüáéíñóúü¿¡ąćęłńóśźżàâæçéèêëïîôœ€ÿüûùäöüß"
-				+ "ãáàâçéêíõóôúüáéíñóúü¿¡ąćęłńóśźżàâæçéèêëïîôœ€ÿüûùäöüß".toUpperCase();
+		parameter.characters = FreeTypeFontGenerator.DEFAULT_CHARS;
 		BitmapFont ret = generator.generateFont(parameter); // font size 12 pixels
 		generator.dispose(); // don't forget to dispose to avoid memory leaks!
 		return ret;
@@ -197,11 +191,7 @@ public class Container {
 		FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
 		parameter.color = color;
 		parameter.size = size * (Gdx.graphics.getWidth() / Gdx.graphics.getHeight());
-		parameter.characters = FreeTypeFontGenerator.DEFAULT_CHARS
-				+ "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ"
-				+ "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ".toLowerCase()
-				+ "ãáàâçéêíõóôúüáéíñóúü¿¡ąćęłńóśźżàâæçéèêëïîôœ€ÿüûùäöüß"
-				+ "ãáàâçéêíõóôúüáéíñóúü¿¡ąćęłńóśźżàâæçéèêëïîôœ€ÿüûùäöüß".toUpperCase();
+		parameter.characters = FreeTypeFontGenerator.DEFAULT_CHARS;
 		BitmapFont ret = generator.generateFont(parameter); // font size 12 pixels
 		generator.dispose(); // don't forget to dispose to avoid memory leaks!
 		fonts.put(fontKey, ret);
@@ -221,11 +211,7 @@ public class Container {
 		FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
 		parameter.color = new Color(213f/255f,16f/255f,16f/255f,255);
 		parameter.size = (int) (size * ratio);
-		parameter.characters = FreeTypeFontGenerator.DEFAULT_CHARS
-				+ "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ"
-				+ "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ".toLowerCase()
-				+ "ãáàâçéêíõóôúüáéíñóúü¿¡ąćęłńóśźżàâæçéèêëïîôœ€ÿüûùäöüß"
-				+ "ãáàâçéêíõóôúüáéíñóúü¿¡ąćęłńóśźżàâæçéèêëïîôœ€ÿüûùäöüß".toUpperCase();
+		parameter.characters = FreeTypeFontGenerator.DEFAULT_CHARS;
 		BitmapFont ret = generator.generateFont(parameter); // font size 12 pixels
 		generator.dispose(); // don't forget to dispose to avoid memory leaks!
 		fonts.put(fontKey, ret);
@@ -239,17 +225,13 @@ public class Container {
 			if (key.fontPath.equals(fontPath) && key.fontSize == size)
 				return fonts.get(key);
 		}
-		float ratio = ((((float) Gdx.graphics.getWidth()) * size / 4000));
+		float ratio = ((((float) Gdx.graphics.getWidth()) * size / 2500));
 
 		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal(FontType.getFontPath(FontType.ROBOTO_REGULAR)));
 		FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
 		parameter.color = new Color(1,1,1,1);
 		parameter.size = (int) (size * ratio);
-		parameter.characters = FreeTypeFontGenerator.DEFAULT_CHARS
-				+ "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ"
-				+ "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ".toLowerCase()
-				+ "ãáàâçéêíõóôúüáéíñóúü¿¡ąćęłńóśźżàâæçéèêëïîôœ€ÿüûùäöüß"
-				+ "ãáàâçéêíõóôúüáéíñóúü¿¡ąćęłńóśźżàâæçéèêëïîôœ€ÿüûùäöüß".toUpperCase();
+		parameter.characters = FreeTypeFontGenerator.DEFAULT_CHARS;
 		BitmapFont ret = generator.generateFont(parameter); // font size 12 pixels
 		generator.dispose(); // don't forget to dispose to avoid memory leaks!
 		fonts.put(fontKey, ret);

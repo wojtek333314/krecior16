@@ -58,6 +58,7 @@ public class ChooseGameMode extends Group {
 
     public void setPosition(float x, float y) {
         dm.setPosition(x - dm.getWidth() / 2, y - dm.getHeight());
+        System.out.println("FFF:" + deathmatch.getWidth());
         deathmatch.setPosition(dm.getX() + dm.getWidth() / 2 - deathmatch.getWidth() / 2
             , dm.getY() + dm.getHeight() / 2 + deathmatch.getHeight() /2);
         normal.setPosition(x - dm.getWidth() / 2, y);

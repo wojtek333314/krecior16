@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.krecior.game.GameScreen;
 import com.krecior.game.enums.PowerType;
 import com.krecior.utils.Container;
+import com.krecior.utils.TextLabel;
 
 public class PowerIcon {
     //===========================================================
@@ -113,7 +114,7 @@ public class PowerIcon {
         pNumberLabel.setOriginCenter();
         pNumberLabel.setAlpha(0f);
 
-        pNumber = new TextLabel(TextLabel.Font.ROBOTO, Integer.toString(number), 0, 0);
+        pNumber = new TextLabel(Container.getFont(10), Integer.toString(number));
 
         show();
     }

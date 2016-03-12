@@ -6,9 +6,9 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.krecior.Manager;
 import com.krecior.game.GameScreen;
-import com.krecior.game.hud.TextLabel;
 import com.krecior.menu.ScreenType;
 import com.krecior.utils.Container;
+import com.krecior.utils.TextLabel;
 
 public class Rank extends Group {
     public static float SIZE = 0.95f * GameScreen.H;
@@ -52,12 +52,10 @@ public class Rank extends Group {
         });
         addActor(enterLabel);
 
-        enter = new TextLabel(TextLabel.Font.CARTOONIC, "ENTER");
-        enter.setScaleXY(2f);
+        enter = new TextLabel(Container.getFont(10), "ENTER");
         addActor(enter);
 
-        rank = new TextLabel(TextLabel.Font.CARTOONIC, "RANK:");
-        rank.setScaleXY(4f);
+        rank = new TextLabel(Container.getFont(10), "RANK:");
         addActor(rank);
     }
 

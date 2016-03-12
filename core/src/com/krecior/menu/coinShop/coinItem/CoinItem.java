@@ -27,7 +27,7 @@ public class CoinItem extends Actor{
         this.itemType = itemType;
         description = CoinItemType.getDescription(itemType);
         textLabel = new TextLabel(Container.getFont(10),description);
-        textLabel.setOrigin(textLabel.getWidth()/2,textLabel.getHeight()/2);
+
         defineTextureRegionAndSprite();
         addListener(new InputListener(){
             @Override
@@ -142,8 +142,6 @@ public class CoinItem extends Actor{
     public void setScale(float scaleX, float scaleY) {
         background.setScale(scaleX,scaleY);
         diamonds.setScale(scaleX,scaleY);
-        textLabel.setOrigin(textLabel.getWidth() / 2, textLabel.getHeight()/2);
-        textLabel.setScale(scaleX,scaleY);
         textLabel.setPosition(background.getX() + background.getWidth()/2 - textLabel.getWidth()/2
                 ,diamonds.getY());
     }
