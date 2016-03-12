@@ -135,7 +135,6 @@ public class AndroidLauncher extends AndroidApplication {
                                 @Override
                                 public void updateProgress(float value) {
                                     progress.setProgress((int) (value * 100));
-                                    System.out.println(value);
                                 }
 
                                 @Override
@@ -187,7 +186,6 @@ public class AndroidLauncher extends AndroidApplication {
                 @Override
                 public void updateProgress(float value) {
                     progress.setProgress((int) (value * 100));
-                    System.out.println(value);
                 }
 
                 @Override

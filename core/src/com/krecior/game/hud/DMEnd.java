@@ -60,20 +60,16 @@ public class DMEnd extends Group{
         });
         addActor(replay);
 
-        score = new TextLabel(TextLabel.Font.CARTOONIC, "SCORE");
-        score.setScaleXY(2.5f);
+        score = new TextLabel(Container.getFont(10), "SCORE");
         addActor(score);
 
-        scoreValue = new TextLabel(TextLabel.Font.CARTOONIC, "0");
-        scoreValue.setScaleXY(2.5f);
+        scoreValue = new TextLabel(Container.getFont(10), "0");
         addActor(scoreValue);
 
-        bestScore = new TextLabel(TextLabel.Font.CARTOONIC, "BEST SCORE");
-        bestScore.setScaleXY(2.5f);
+        bestScore = new TextLabel(Container.getFont(10), "BEST SCORE");
         addActor(bestScore);
 
-        bestScoreValue = new TextLabel(TextLabel.Font.CARTOONIC, "0");
-        bestScoreValue.setScaleXY(2.5f);
+        bestScoreValue = new TextLabel(Container.getFont(10), "0");
         addActor(bestScoreValue);
     }
 

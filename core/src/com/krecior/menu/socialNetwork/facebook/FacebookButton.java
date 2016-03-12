@@ -30,13 +30,13 @@ public class FacebookButton extends Actor {
 
         if(isDone){
             String text = facebookButtonType==FacebookButtonType.LIKE ? "Thanks for like!" : "Thanks for sharing!";
-            label = new TextLabel(TextLabel.Font.ROBOTO,text);
+            label = new TextLabel(Container.getFont(10),text);
         }else
         {
             diamond = new Image((Container.getTextureRegion("gfx/itemShop/icon_diamond.png")));
             diamond.setSize(W * 0.1f, W * 0.1f);
 
-            label = new TextLabel(TextLabel.Font.ROBOTO,facebookButtonType==FacebookButtonType.SHARE ? "+500" : "+100");
+            label = new TextLabel(Container.getFont(10),facebookButtonType==FacebookButtonType.SHARE ? "+500" : "+100");
             image = facebookButtonType==FacebookButtonType.LIKE ? new Image(Container.getTextureRegion("gfx/socialNetwork/like_fb.png")) :
                     new Image(Container.getTextureRegion("gfx/socialNetwork/share_fb.png"));
             image.setSize(W * 0.36f, W * 0.09f);

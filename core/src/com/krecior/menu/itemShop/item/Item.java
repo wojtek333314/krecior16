@@ -40,7 +40,7 @@ public class Item extends Actor {
     public Item(PowerType itemType){
         this.itemType = itemType;
         cost = PowerType.getCost(itemType);
-        textLabel = new TextLabel(TextLabel.Font.ROBOTO,Integer.toString(cost));
+        textLabel = new TextLabel(Container.getFont(10),Integer.toString(cost));
         isBuyed = Data.isPowerAvaliable(getItemType());
         description = PowerType.getDescription(itemType);
 

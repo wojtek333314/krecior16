@@ -102,7 +102,7 @@ public class MenuMsgBox extends Group {
     }
 
     private void initTextLabels() {
-        descriptionLabel = new TextLabel(TextLabel.Font.ROBOTO, description);
+        descriptionLabel = new TextLabel(Container.getFont(10), description);
         descriptionLabel.setAlign(Align.center);
     }
 
@@ -211,7 +211,7 @@ public class MenuMsgBox extends Group {
         private boolean canClick = true;
 
         public MenuMsgBoxButton(String text) {
-            textLabel = new TextLabel(TextLabel.Font.ROBOTO, text);
+            textLabel = new TextLabel(Container.getFont(10), text);
             textLabel.setAlign(Align.left);
             image = new Image(Container.getTextureRegion("gfx/msgBox/score_label.png"));
             image.setOrigin(image.getWidth() / 2, image.getHeight() / 2);

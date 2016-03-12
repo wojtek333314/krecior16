@@ -6,32 +6,11 @@ import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Align;
 
+
 /**
- * Created by Wojciech Osak on 2015-09-26.
- * Tworzy label do rysowania tekstow ktory przystosowuje sie do rozmiaru ekranu.
- * Wspierane rozdzielczosci: 160dpi, 320dpi, 480dpi, jesli wiekszy ustawia ten dla 480dpi font.
- *
- * Wymagania: pliki dla wszystkich dpi wspieranych .fnt i .png o nazwie NAZWAFONTU_ROZDZIELCZOSC.ROZSZERZENIE w folderze assets/fonts/
- * Np. dla czcionki roboto:
- * roboto_hdpi (pliki .fnt i .png), roboto_xhdpi (-=-) i roboto_xxhdpi (-=-)
- *
- * Pliki tworzymy w programie Hiero wg pliku ustawien dodanego w folderze Assets/fonts o nazwie "hieroConfigFonts"
- * PAMIETAC O ZAZNACZENIU GLYPH CASE !!!!!!!
- *
- * Rozmiary dla poszczegolnych DPI (w Hiero jest to FontSize):
- * hdpi: 18
- * xhdpi: 28
- * xxhdpi: 36
- *
- * Nastepnie pliki wklejamy do assets/fonts. Sposób uzycia klasy:
- * TextLabel label = new TextLabel(TextLabel.Font.Roboto,"jakis tekst do wyswietlenia");
- * wyrysowanie:
- * label.draw(batch);
- *
- * Rozmiar fonta mozemy skalowac przez:
- * label.setScale(x,y);
+ * Created by Wojciech Osak on 2016-02-06.
  */
-public class TextLabel extends Actor {
+public class LabelActor extends Actor {
     private BitmapFont bitmapFont;
     private String text;
     private GlyphLayout glyphLayout = new GlyphLayout();
@@ -41,12 +20,12 @@ public class TextLabel extends Actor {
     private int align = Align.left;
     private float height;
 
-    public TextLabel(BitmapFont bitmapFont, String text) {
+    public LabelActor(BitmapFont bitmapFont, String text) {
         this.bitmapFont = bitmapFont;
         this.text = text;
     }
 
-    public TextLabel(BitmapFont bitmapFont, String text, int lineWidth) {
+    public LabelActor(BitmapFont bitmapFont, String text, int lineWidth) {
         this.bitmapFont = bitmapFont;
         this.text = text;
         this.wrap = true;
@@ -54,7 +33,7 @@ public class TextLabel extends Actor {
         glyphLayout.setText(bitmapFont, text, 0, text.length(), bitmapFont.getColor(), lineWidth, Align.left, true, null);
     }
 
-    public TextLabel(BitmapFont bitmapFont, String text, int lineWidth, int align) {
+    public LabelActor(BitmapFont bitmapFont, String text, int lineWidth, int align) {
         this.bitmapFont = bitmapFont;
         this.text = text;
         this.wrap = true;

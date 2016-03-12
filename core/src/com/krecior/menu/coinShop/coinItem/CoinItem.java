@@ -26,7 +26,7 @@ public class CoinItem extends Actor{
     public CoinItem(CoinItemType itemType){
         this.itemType = itemType;
         description = CoinItemType.getDescription(itemType);
-        textLabel = new TextLabel(TextLabel.Font.ROBOTO,description,1f);
+        textLabel = new TextLabel(Container.getFont(10),description);
         textLabel.setOrigin(textLabel.getWidth()/2,textLabel.getHeight()/2);
         defineTextureRegionAndSprite();
         addListener(new InputListener(){

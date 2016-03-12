@@ -49,12 +49,10 @@ public class ChooseGameMode extends Group {
         });
         addActor(normal);
 
-        deathmatch = new TextLabel(TextLabel.Font.CARTOONIC, "SURVIVAL MODE");
-        deathmatch.setScaleXY(1.5f);
+        deathmatch = new TextLabel(Container.getFont(10), "SURVIVAL MODE");
         addActor(deathmatch);
 
-        normalText = new TextLabel(TextLabel.Font.CARTOONIC, "LEVEL MODE");
-        normalText.setScaleXY(1.5f);
+        normalText = new TextLabel(Container.getFont(10), "LEVEL MODE");
         addActor(normalText);
     }
 

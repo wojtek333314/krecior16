@@ -57,7 +57,7 @@ public class EndButton {
         label.setOriginCenter();
         label.setPosition(GameScreen.W, GameScreen.H);
 
-        textLabel = new TextLabel(TextLabel.Font.ROBOTO,"");
+        textLabel = new TextLabel(Container.getFont(10),"");
         textLabel.setAlign(Align.center);
 
         diamonds = new Sprite[MAX_DIAMONDS];

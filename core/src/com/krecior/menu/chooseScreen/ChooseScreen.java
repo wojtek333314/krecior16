@@ -181,7 +181,7 @@ public class ChooseScreen implements Screen {
 	}
 
 	private void showLandName() {
-	    landLabel = new TextLabel(TextLabel.Font.ROBOTO,"Land 1",2f);
+	    landLabel = new TextLabel(Container.getFont(10),"Land 1");
         landLabel.setPosition(W / 2 - landLabel.getWidth() / 2, H - TOP_LABEL_SIZE * 0.35f / 4 );
         mainStage.addActor(landLabel);
 	}

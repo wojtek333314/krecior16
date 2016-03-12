@@ -3,8 +3,8 @@ package com.krecior.menu.chooseScreen.elements;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.krecior.utils.Container;
 import com.krecior.utils.Data;
-import com.krecior.utils.TextLabel;
 
 /**
  * Created by Wojciech Osak on 2015-11-07.
@@ -34,7 +34,7 @@ public class LevelTab extends Group {
         pColumn = mColumn;
         levelButton = new LevelButton[pRow * pColumn];
         int index;
-        BitmapFont bitmapFontForLabels = TextLabel.createFontOnce("roboto");
+        BitmapFont bitmapFontForLabels = Container.getFont(10);
 
         for(int i = 0; i < pRow; i++)
             for(int j = 0; j < pColumn; j++) {

@@ -8,7 +8,6 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
-import com.krecior.Manager;
 import com.krecior.menu.achievements.system.Achievement;
 import com.krecior.utils.Container;
 import com.krecior.utils.TextLabel;
@@ -67,7 +66,7 @@ public class AchievementItem extends Actor{
     }
 
     private void defineLabel(){
-        label = new TextLabel(TextLabel.Font.ROBOTO,Achievement.getDescription(achievementType));
+        label = new TextLabel(Container.getFont(10),Achievement.getDescription(achievementType));
         label.setAlign(Align.center);
     }
 

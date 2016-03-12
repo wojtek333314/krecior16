@@ -53,8 +53,8 @@ public class ItemShopScreen extends Stage implements Screen {
 
         mainStage = new Stage();
         screenBatch = new SpriteBatch();
-        coinsLabel = new TextLabel(TextLabel.Font.ROBOTO, Integer.toString(Data.getDiamonds()));
-        coinsLabel.setScaleXY(2f);
+        coinsLabel = new TextLabel(Container.getFont(10), Integer.toString(Data.getDiamonds()));
+
 
         showBackground();
         showStaticButtons();
@@ -255,7 +255,7 @@ public class ItemShopScreen extends Stage implements Screen {
     }
 
     private void exampleOfRanking(){
-        Manager.rankingFacade.getPlayersRankingDependsOnNick("wojtas", new ServerRequestListener() {
+        Manager.rankingFacade.getPlayersRankingDependsOnNick("wojtaus", new ServerRequestListener() {
             @Override
             public void onSuccess(String json) {
                 System.out.println(json);//wyswietlam odpowiedz serwera

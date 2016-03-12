@@ -1,14 +1,18 @@
 package com.krecior.utils;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonWriter.OutputType;
 import com.krecior.game.enums.PowerType;
 import com.krecior.sound.SoundManager;
+import com.krecior.utils.enums.FontType;
 
 import java.util.HashMap;
 
@@ -64,7 +68,7 @@ public class Container {
 
 	public static LandsData pLandsData;
 	public static Lvl[] pLvlsData;
-
+	private static HashMap<FontKey, BitmapFont> fonts = new HashMap<FontKey, BitmapFont>();
 	// ===========================================================
 	// Constructors
 	// ===========================================================
@@ -150,6 +154,107 @@ public class Container {
 		return ret;
 	}
 
+
+	/**
+	 * Zwraca czcionke ale nie dodaje jej do hashMapy
+	 *
+	 * @param font
+	 * @param size
+	 * @return
+	 */
+	public static BitmapFont getTemporalyFont(FontType font, int size) {
+		String fontPath = FontType.getFontPath(font);
+		for (FontKey key : fonts.keySet()) {
+			if (key.fontPath.equals(fontPath) && key.fontSize == size)
+				return fonts.get(key);
+		}
+
+		System.out.println("create temporaly font:" + fontPath);
+		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal(FontType.getFontPath(font)));
+		FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+		parameter.color = Color.FIREBRICK;
+		parameter.size = size * (Gdx.graphics.getWidth() / Gdx.graphics.getHeight());
+		parameter.characters = FreeTypeFontGenerator.DEFAULT_CHARS
+				+ "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ"
+				+ "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ".toLowerCase()
+				+ "ãáàâçéêíõóôúüáéíñóúü¿¡ąćęłńóśźżàâæçéèêëïîôœ€ÿüûùäöüß"
+				+ "ãáàâçéêíõóôúüáéíñóúü¿¡ąćęłńóśźżàâæçéèêëïîôœ€ÿüûùäöüß".toUpperCase();
+		BitmapFont ret = generator.generateFont(parameter); // font size 12 pixels
+		generator.dispose(); // don't forget to dispose to avoid memory leaks!
+		return ret;
+	}
+
+	public static BitmapFont getFont(FontType font, int size, Color color) {
+		String fontPath = FontType.getFontPath(font);
+		FontKey fontKey = new FontKey(fontPath, size);
+		for (FontKey key : fonts.keySet()) {
+			if (key.fontPath.equals(fontPath) && key.fontSize == size)
+				return fonts.get(key);
+		}
+
+		System.out.println("create font:" + fontPath);
+		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal(FontType.getFontPath(font)));
+		FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+		parameter.color = color;
+		parameter.size = size * (Gdx.graphics.getWidth() / Gdx.graphics.getHeight());
+		parameter.characters = FreeTypeFontGenerator.DEFAULT_CHARS
+				+ "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ"
+				+ "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ".toLowerCase()
+				+ "ãáàâçéêíõóôúüáéíñóúü¿¡ąćęłńóśźżàâæçéèêëïîôœ€ÿüûùäöüß"
+				+ "ãáàâçéêíõóôúüáéíñóúü¿¡ąćęłńóśźżàâæçéèêëïîôœ€ÿüûùäöüß".toUpperCase();
+		BitmapFont ret = generator.generateFont(parameter); // font size 12 pixels
+		generator.dispose(); // don't forget to dispose to avoid memory leaks!
+		fonts.put(fontKey, ret);
+		return ret;
+	}
+
+	public static BitmapFont getFont(FontType font, int size) {
+		String fontPath = FontType.getFontPath(font);
+		FontKey fontKey = new FontKey(fontPath, size);
+		for (FontKey key : fonts.keySet()) {
+			if (key.fontPath.equals(fontPath) && key.fontSize == size)
+				return fonts.get(key);
+		}
+		float ratio = ((((float) Gdx.graphics.getWidth()) * size / 4000));
+
+		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal(FontType.getFontPath(font)));
+		FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+		parameter.color = new Color(213f/255f,16f/255f,16f/255f,255);
+		parameter.size = (int) (size * ratio);
+		parameter.characters = FreeTypeFontGenerator.DEFAULT_CHARS
+				+ "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ"
+				+ "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ".toLowerCase()
+				+ "ãáàâçéêíõóôúüáéíñóúü¿¡ąćęłńóśźżàâæçéèêëïîôœ€ÿüûùäöüß"
+				+ "ãáàâçéêíõóôúüáéíñóúü¿¡ąćęłńóśźżàâæçéèêëïîôœ€ÿüûùäöüß".toUpperCase();
+		BitmapFont ret = generator.generateFont(parameter); // font size 12 pixels
+		generator.dispose(); // don't forget to dispose to avoid memory leaks!
+		fonts.put(fontKey, ret);
+		return ret;
+	}
+
+	public static BitmapFont getFont(int size) {
+		String fontPath = FontType.getFontPath(FontType.ROBOTO_REGULAR);
+		FontKey fontKey = new FontKey(fontPath, size);
+		for (FontKey key : fonts.keySet()) {
+			if (key.fontPath.equals(fontPath) && key.fontSize == size)
+				return fonts.get(key);
+		}
+		float ratio = ((((float) Gdx.graphics.getWidth()) * size / 4000));
+
+		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal(FontType.getFontPath(FontType.ROBOTO_REGULAR)));
+		FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+		parameter.color = new Color(1,1,1,1);
+		parameter.size = (int) (size * ratio);
+		parameter.characters = FreeTypeFontGenerator.DEFAULT_CHARS
+				+ "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ"
+				+ "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ".toLowerCase()
+				+ "ãáàâçéêíõóôúüáéíñóúü¿¡ąćęłńóśźżàâæçéèêëïîôœ€ÿüûùäöüß"
+				+ "ãáàâçéêíõóôúüáéíñóúü¿¡ąćęłńóśźżàâæçéèêëïîôœ€ÿüûùäöüß".toUpperCase();
+		BitmapFont ret = generator.generateFont(parameter); // font size 12 pixels
+		generator.dispose(); // don't forget to dispose to avoid memory leaks!
+		fonts.put(fontKey, ret);
+		return ret;
+	}
 
 	private TextureRegion[] getTiledTextureRegion(String pName, int numberOfRows, int numberOfColumns) {
 		Texture t = new Texture(Gdx.files.internal(pName));
@@ -327,87 +432,14 @@ public class Container {
             return type;
         }
     }
+
+	private static class FontKey {
+		public String fontPath;
+		public int fontSize;
+
+		public FontKey(String fontPath, int fontSize) {
+			this.fontPath = fontPath;
+			this.fontSize = fontSize;
+		}
+	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//===========================================================
-//Constants
-//===========================================================
-
-
-
-//===========================================================
-//Fields
-//===========================================================
-
-
-
-//===========================================================
-//Constructors
-//===========================================================
-
-
-
-//===========================================================
-//Getter & Setter
-//===========================================================
-
-
-
-//===========================================================
-//Methods for/from SuperClass/Interfaces
-//===========================================================
-
-
-
-//===========================================================
-//Methods
-//===========================================================
-
-
-
-//===========================================================
-//Inner and Anonymous Classes
-//===========================================================
