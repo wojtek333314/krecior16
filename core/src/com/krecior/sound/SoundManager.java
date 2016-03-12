@@ -37,7 +37,7 @@ public class SoundManager {
         eraser_final = Gdx.audio.newSound(Gdx.files.internal("sfx/eraser_final.mp3"));
         fire_final = Gdx.audio.newSound(Gdx.files.internal("sfx/fire_final.wav"));
         hammer_hit_final = Gdx.audio.newSound(Gdx.files.internal("sfx/hammer_hit_final.wav"));
-        screwdriver_hit_final = Gdx.audio.newSound(Gdx.files.internal("sfx/screwdriver_hit_final.wav"));
+        screwdriver_hit_final = click_final;
         poison_project = Gdx.audio.newSound(Gdx.files.internal("sfx/poison_project.wav"));
         shot_pistol_final = Gdx.audio.newSound(Gdx.files.internal("sfx/shot_pistol_final.wav"));
         splash_final = Gdx.audio.newSound(Gdx.files.internal("sfx/splash_final.wav"));
