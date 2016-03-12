@@ -56,8 +56,8 @@ public class AndroidLauncher extends AndroidApplication {
             }
 
             @Override
-            public void getPlayersRankingDependsOnNick(String nick, ServerRequestListener listener) {
-                rankingFacadeImplementation.getPlayersListDependOnNick(nick, listener);
+            public void getPlayersRankingDependsOnNick(String nick,int listSize, ServerRequestListener listener) {
+                rankingFacadeImplementation.getPlayersListDependOnNick(nick,listSize, listener);
             }
         };
         facebookPluginListener = new FacebookPluginListener() {
@@ -290,6 +290,12 @@ public class AndroidLauncher extends AndroidApplication {
                 loadAd();
             }
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        android.os.Process.killProcess(android.os.Process.myPid());
     }
 
     protected boolean isOnline() {

@@ -12,9 +12,9 @@ import ranking.parameters.Parameters;
  */
 public class GetList {
 
-    public GetList(String nick, ServerRequestListener serverRequestListener){
+    public GetList(String nick, String listSize, ServerRequestListener serverRequestListener){
         new ServerRequest(ServiceType.GET_LIST,
-                new Parameters().addParam("nick",nick))
+                new Parameters().addParam("nick",nick).addParam("listSize",listSize))
                 .setServerRequestListener(serverRequestListener)
                 .execute();
     }
