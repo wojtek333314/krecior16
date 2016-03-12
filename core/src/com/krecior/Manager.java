@@ -206,4 +206,6 @@ public class Manager extends Game {
     public void setAppStore(int isAppStore) {
         this.isAppStore = isAppStore;
     }
+
+    public static boolean isInternetAccess() { return true; }
 }

@@ -75,6 +75,7 @@ public class GameScreen implements Screen {
     private int actualLevel;
 	public static boolean physicSimulation = false;
 	private boolean deathmatch = false;
+	public boolean canTouchMole = true;
 	public static float TIME_STEP;
 	public static int COLUMNS;
 	public static int ROWS;
