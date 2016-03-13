@@ -31,6 +31,11 @@ public class DownloadFile {
                     requestListener.onError(601, description);
             }
 
+            @Override
+            public void onConnectionError() {
+
+            }
+
         });
 
         param = new Param("number", fileNumber);

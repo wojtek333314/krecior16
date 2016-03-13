@@ -1,26 +1,15 @@
 package com.krecior.game.hud;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-
-import com.badlogic.gdx.utils.Json;
-import com.badlogic.gdx.utils.JsonWriter;
 import com.krecior.Manager;
 import com.krecior.game.GameScreen;
-import com.krecior.menu.ScreenType;
-import com.krecior.menu.objects.MenuMsgBox;
 import com.krecior.utils.Container;
 import com.krecior.utils.Data;
 import com.krecior.utils.ServerRequestListener;
 import com.krecior.utils.TextLabel;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import jdk.nashorn.internal.runtime.Context;
 
 public class DMEnd extends Group{
     private GameScreen gameScreen;
@@ -145,6 +134,11 @@ public class DMEnd extends Group{
             public void onError(int code, String description) {
 
             }
+
+            @Override
+            public void onConnectionError() {
+
+            }
         });
 
         Manager.rankingFacade.registerPoints("wpisanynick", 4200, new ServerRequestListener() {
@@ -156,6 +150,11 @@ public class DMEnd extends Group{
 
             @Override
             public void onError(int code, String description) {
+
+            }
+
+            @Override
+            public void onConnectionError() {
 
             }
         });

@@ -251,6 +251,7 @@ public class ItemShopScreen extends Stage implements Screen {
         mainStage.addActor(coinIcon);
         mainStage.addActor(topIcon);
 
+        System.out.println("CZY MAM POLACZENIE Z NETEM?"+Manager.rankingFacade.isOnline());
 
         Manager.rankingFacade.getRanking(1000, new ServerRequestListener() {
             @Override
@@ -260,6 +261,11 @@ public class ItemShopScreen extends Stage implements Screen {
 
             @Override
             public void onError(int code, String description) {
+
+            }
+
+            @Override
+            public void onConnectionError() {
                 System.out.println("TU OBSLUZ BRAK INTERNETU PO KLIKNIECIU OK");
             }
         });

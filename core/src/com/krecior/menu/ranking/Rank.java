@@ -62,6 +62,11 @@ public class Rank extends Group {
             public void onError(int code, String description) {
 
             }
+
+            @Override
+            public void onConnectionError() {
+
+            }
         });
     }
 
@@ -150,6 +155,11 @@ public class Rank extends Group {
                 @Override
                 public void onError(int code, String description) {
                     System.out.println("niepoprawnie");
+                }
+
+                @Override
+                public void onConnectionError() {
+
                 }
             });
         }

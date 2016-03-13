@@ -8,4 +8,5 @@ import com.krecior.utils.ServerRequestListener;
 public interface RankingFacade {
     void registerPoints(String nick,int points,ServerRequestListener listener);
     void getRanking(int points, ServerRequestListener listener);
+    boolean isOnline();
 }

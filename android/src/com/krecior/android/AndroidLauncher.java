@@ -45,7 +45,7 @@ public class AndroidLauncher extends AndroidApplication {
         FacebookSdk.sdkInitialize(this);
 
         facebookPluginAndroid = new FacebookPluginAndroid(this);
-        rankingFacadeImplementation = new RankingFacadeImpl();
+        rankingFacadeImplementation = new RankingFacadeImpl(this);
         rankingFacade = new RankingFacade() {
             @Override
             public void registerPoints(String nick, int points, ServerRequestListener listener) {
@@ -63,7 +63,11 @@ public class AndroidLauncher extends AndroidApplication {
                 else{
                     showOfflineMsgbox(listener);
                 }
+            }
 
+            @Override
+            public boolean isOnline() {
+                return AndroidLauncher.this.isOnline();
             }
         };
         facebookPluginListener = new FacebookPluginListener() {
@@ -251,14 +255,13 @@ public class AndroidLauncher extends AndroidApplication {
     }
 
     private void showOfflineMsgbox(final ServerRequestListener serverRequestListener) {
-        System.out.println("OFFLINE");
         final AlertDialog.Builder dlgAlert = new AlertDialog.Builder(this);
         dlgAlert.setMessage("You have no Internet connection!");
         dlgAlert.setTitle("Warning!");
         dlgAlert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                serverRequestListener.onError(50, "No connection");
+                serverRequestListener.onConnectionError();
             }
         });
         dlgAlert.setCancelable(true);
@@ -268,7 +271,6 @@ public class AndroidLauncher extends AndroidApplication {
                 dlgAlert.create().show();
             }
         });
-
     }
 
     @Override

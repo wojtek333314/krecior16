@@ -33,6 +33,11 @@ public class ServerMultiTaskManager {
                     checkStatus();
                 }
 
+                @Override
+                public void onConnectionError() {
+
+                }
+
             });
             df.start();
         }
