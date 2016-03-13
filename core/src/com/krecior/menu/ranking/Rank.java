@@ -1,6 +1,5 @@
 package com.krecior.menu.ranking;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -15,7 +14,6 @@ import com.krecior.utils.Container;
 import com.krecior.utils.ServerRequestListener;
 import com.krecior.utils.TextLabel;
 
-import java.lang.annotation.ElementType;
 import java.util.ArrayList;
 
 public class Rank extends Group {
@@ -46,7 +44,7 @@ public class Rank extends Group {
     }
 
     private void getRanking(){
-        Manager.rankingFacade.getPlayersRankingDependsOnNick("wojtaus", 10, new ServerRequestListener() {
+        Manager.rankingFacade.getRanking( 10, new ServerRequestListener() {
             @Override
             public void onSuccess(String json) {
                 System.out.println(json);//wyswietlam odpowiedz serwera

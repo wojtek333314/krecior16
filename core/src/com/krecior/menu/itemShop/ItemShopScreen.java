@@ -255,7 +255,7 @@ public class ItemShopScreen extends Stage implements Screen {
     }
 
     private void exampleOfRanking(){
-        Manager.rankingFacade.getRanking(5000, new ServerRequestListener() {
+        Manager.rankingFacade.getRanking(1000, new ServerRequestListener() {
             @Override
             public void onSuccess(String json) {
                 System.out.println(json);//wyswietlam odpowiedz serwera
@@ -269,7 +269,7 @@ public class ItemShopScreen extends Stage implements Screen {
             }
         });
 
-        Manager.rankingFacade.registerPoints("wpisanynick",1200, new ServerRequestListener() {
+        Manager.rankingFacade.registerPoints("wpisanynick",4200, new ServerRequestListener() {
             @Override
             public void onSuccess(String json) {
                 System.out.println(json);//wyswietlam odpowiedz serwera
