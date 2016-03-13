@@ -46,7 +46,7 @@ public class DMEnd extends Group{
         rank.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                if (Manager.isInternetAccess()) {
+                if (Manager.rankingFacade.isOnline()) {
                     gameScreen.getHud().popUpRank();
                     hide();
                 } else {

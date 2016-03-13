@@ -147,7 +147,6 @@ public class MoleManager {
 
                             @Override
                             public void onAnimationFinished() {
-                                System.out.println("PIERWSZA ZAKONCZONA");
                                 m.setAnimation(new Animation(m.getSprite()
                                         , 0.054f * (1.85f - (Mole.SPAWN_TIME - 1.85f)), 1
                                         , Container.pMoleFrame, 0, 2, m.getAngle()) {

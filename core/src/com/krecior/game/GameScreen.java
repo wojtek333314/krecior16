@@ -88,6 +88,8 @@ public class GameScreen implements Screen {
 			deathmatch = true;
         System.out.println(Container.pLvlsData.length + "/:/"+actualLevel);
         Gdx.input.setCatchBackKey(true);
+
+		System.out.println("odpalam Gamescreen");
     }
 
     public int getActualLevel() {
