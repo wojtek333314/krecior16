@@ -40,6 +40,7 @@ public class Rank extends Group {
 
     private JSONObject jsonObject;
     private boolean first = true;
+    boolean msgPoped = false;
 
     public Rank(GameScreen gameScreen) {
         this.gameScreen = gameScreen;
@@ -97,7 +98,7 @@ public class Rank extends Group {
         ball.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                Manager.manager.changeScreen(ScreenType.MAIN_SCREEN);
+                if(!msgPoped) Manager.manager.changeScreen(ScreenType.MAIN_SCREEN);
                 return false;
             }
         });
@@ -150,18 +151,19 @@ public class Rank extends Group {
         @Override
         public void input (String text) {
             if(!text.equals("Enter name")) {
+                msgPoped = true;
                 MsgBox msgBox = new MsgBox("Invalid name!") {
                     @Override
                     public void onTouchDown() {
                         Gdx.input.getTextInput(listener, "What is your name?", "Name", " ");
+                        msgPoped = false;
                         super.onTouchDown();
                     }
                 };
                 msgBox.setPosition(GameScreen.W / 2 - MsgBox.WIDTH / 2
                         , GameScreen.H / 2 - MsgBox.HEIGHT / 2);
                 addActor(msgBox);
-            }
-            if(text.length() > 3) {
+            } else if(text.length() > 3) {
                 name = text;
                 if(name.length() >= 10) name = text.substring(0, 10);
 
@@ -192,10 +194,12 @@ public class Rank extends Group {
                 });
                 Manager.manager.changeScreen(ScreenType.MAIN_SCREEN);
             } else {
+                msgPoped = true;
                 MsgBox msgBox = new MsgBox("Too short!") {
                     @Override
                     public void onTouchDown() {
                         Gdx.input.getTextInput(listener, "What is your name?", "Name", " ");
+                        msgPoped = false;
                         super.onTouchDown();
                     }
                 };
