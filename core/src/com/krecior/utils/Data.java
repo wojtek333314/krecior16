@@ -46,7 +46,7 @@ public class Data {
 		tmp.flush();
 	}
 
-	private static void putInt(String key, int mInt) {
+	public static void putInt(String key, int mInt) {
 		Preferences tmp = getPreferences();
 		tmp.putInteger(key, mInt);
 		tmp.flush();
@@ -94,13 +94,18 @@ public class Data {
 		}
 		putBoolean("level0unlocked", true);
 		putInt("diamonds", 0);
+		putInt("BEST_GAME", 0);
 
 		for(PowerType itemType : PowerType.values()){
 			putBoolean("ITEM_ISBUYED_"+itemType.name(),false);
 		}
 	}
 
+	public static void setBestGame(int points) {
+		putInt("BEST_GAME", points);
+	}
 
+	public static int getBestGame() { return getInt("BEST_GAME"); }
 
 	public static int getAchievementValue(Achievement achievement){
 		return getInt("Achievement_" + achievement.name());

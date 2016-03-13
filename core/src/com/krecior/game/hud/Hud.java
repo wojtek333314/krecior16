@@ -10,8 +10,10 @@ import com.badlogic.gdx.utils.Array;
 import com.krecior.game.GameScreen;
 import com.krecior.game.enums.PowerType;
 import com.krecior.game.objects.Mole;
+import com.krecior.menu.objects.MenuMsgBox;
 import com.krecior.menu.ranking.Rank;
 import com.krecior.utils.Container;
+import com.krecior.utils.MsgBox;
 import com.krecior.utils.TextLabel;
 
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -68,6 +70,7 @@ public class Hud extends Group {
     private boolean isPauseDisappearing = false;
     private boolean isPauseAppearing = false;
     private boolean isEnd = false;
+    private boolean internetShowed = false;
 
     private float counterAlpha = 0f;
     private float pauseAlpha = 1f;
@@ -153,8 +156,8 @@ public class Hud extends Group {
 
     private void createRank() {
         rank = new Rank(pGame);
-        rank.hide();
         stage.addActor(rank);
+        rank.hide();
     }
 
     public void popUpRank() { rank.popUp(); }
@@ -171,7 +174,9 @@ public class Hud extends Group {
 
     public void hideDMend() { dmEnd.hide(); }
 
-    public void popUpDMend() { dmEnd.popUp(); }
+    public void popUpDMend() {
+        dmEnd.popUp(pGame.getScoreManager().getPoints());
+    }
 
     private void createObjectValues() {
         for(int i = 0; i < values.length; i++) {
@@ -365,6 +370,20 @@ public class Hud extends Group {
 
         pPowerCounter.setText(s1);
         refreshPowerCounterPosition();
+    }
+
+    public void popUpNotInternetAccess() {
+        if(!internetShowed) {
+            MsgBox notInternet = new MsgBox("Not internet access.") {
+                @Override
+                public void onTouchDown() {
+                    internetShowed = false;
+                }
+            };
+            stage.addActor(notInternet);
+            notInternet.show();
+        }
+        internetShowed = true;
     }
 
     public void render() {

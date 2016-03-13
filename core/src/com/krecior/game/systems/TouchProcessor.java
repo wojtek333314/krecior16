@@ -83,7 +83,7 @@ public class TouchProcessor implements InputProcessor {
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		if(pGame.TIME_STEP != 0) {
+		if(pGame.TIME_STEP != 0 && pGame.canTouchMole) {
             pTouchX = screenX;
             pTouchY = screenY;
 

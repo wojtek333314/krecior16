@@ -5,9 +5,15 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
+import com.krecior.Manager;
 import com.krecior.game.GameScreen;
+import com.krecior.menu.ScreenType;
+import com.krecior.menu.objects.MenuMsgBox;
 import com.krecior.utils.Container;
+import com.krecior.utils.Data;
 import com.krecior.utils.TextLabel;
+
+import jdk.nashorn.internal.runtime.Context;
 
 public class DMEnd extends Group{
     private GameScreen gameScreen;
@@ -24,6 +30,8 @@ public class DMEnd extends Group{
     private TextLabel bestScore;
     private TextLabel scoreValue;
     private TextLabel bestScoreValue;
+
+    private int scores;
 
     public DMEnd(GameScreen gameScreen) {
         this.gameScreen = gameScreen;
@@ -42,8 +50,12 @@ public class DMEnd extends Group{
         rank.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                hide();
-                gameScreen.getHud().popUpRank();
+                if (Manager.isInternetAccess()) {
+                    gameScreen.getHud().popUpRank();
+                    hide();
+                } else {
+                    gameScreen.getHud().popUpNotInternetAccess();
+                }
                 return false;
             }
         });
@@ -60,20 +72,24 @@ public class DMEnd extends Group{
         });
         addActor(replay);
 
-        score = new TextLabel(Container.getFont(10), "SCORE");
+        score = new TextLabel(Container.getFont(13), "SCORE");
         addActor(score);
 
-        scoreValue = new TextLabel(Container.getFont(10), "0");
+        scoreValue = new TextLabel(Container.getFont(13), Integer.toString(scores));
         addActor(scoreValue);
 
-        bestScore = new TextLabel(Container.getFont(10), "BEST SCORE");
+        bestScore = new TextLabel(Container.getFont(13), "BEST SCORE");
         addActor(bestScore);
 
-        bestScoreValue = new TextLabel(Container.getFont(10), "0");
+        bestScoreValue = new TextLabel(Container.getFont(13), Integer.toString(Data.getBestGame()));
         addActor(bestScoreValue);
     }
 
-    public void popUp() {
+    public void popUp(int scores) {
+        this.scores = scores;
+        setScoreValue(scores);
+        if(scores > Data.getBestGame()) Data.setBestGame(scores);
+        setBestScoreValue(Data.getBestGame());
         setPosition(GameScreen.W / 2 - SIZE / 2, GameScreen.H / 2 - SIZE / 2);
     }
 
@@ -82,7 +98,7 @@ public class DMEnd extends Group{
     }
 
     public void setScoreValue(int score) {
-        scoreValue.setText(Integer.toString(score));
+        scoreValue.setText(Integer.toString(scores));
     }
 
     public void setBestScoreValue(int score) {

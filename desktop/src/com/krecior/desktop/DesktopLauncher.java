@@ -1,6 +1,8 @@
 package com.krecior.desktop;
 
+import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
+import com.krecior.Manager;
 
 public class DesktopLauncher {
 	public static void main (String[] arg) {
@@ -28,7 +30,7 @@ public class DesktopLauncher {
 		 */
 		//Wojtas test to moja linijka
 		//test kolizja
-		//new LwjglApplication(new Manager(null), config);
+		new LwjglApplication(new Manager(null, null, null, null), config);
 
 	}
 }
