@@ -18,7 +18,6 @@ import com.krecior.menu.itemShop.item.Item;
 import com.krecior.menu.objects.MenuMsgBox;
 import com.krecior.utils.Container;
 import com.krecior.utils.Data;
-import com.krecior.utils.ServerRequestListener;
 import com.krecior.utils.TextLabel;
 
 import java.util.ArrayList;
@@ -251,23 +250,5 @@ public class ItemShopScreen extends Stage implements Screen {
         mainStage.addActor(coinIcon);
         mainStage.addActor(topIcon);
 
-        System.out.println("CZY MAM POLACZENIE Z NETEM?"+Manager.rankingFacade.isOnline());
-
-        Manager.rankingFacade.getRanking(1000, new ServerRequestListener() {
-            @Override
-            public void onSuccess(String json) {
-                //gotcha!
-            }
-
-            @Override
-            public void onError(int code, String description) {
-
-            }
-
-            @Override
-            public void onConnectionError() {
-                System.out.println("TU OBSLUZ BRAK INTERNETU PO KLIKNIECIU OK");
-            }
-        });
     }
 }
