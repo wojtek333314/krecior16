@@ -150,7 +150,8 @@ public class Rank extends Group {
     private class TextInput implements Input.TextInputListener {
         @Override
         public void input (String text) {
-            if(!text.equals("Enter name")) {
+            name = text;
+            if(text.equals("Enter name")) {
                 msgPoped = true;
                 MsgBox msgBox = new MsgBox("Invalid name!") {
                     @Override
@@ -164,7 +165,6 @@ public class Rank extends Group {
                         , GameScreen.H / 2 - MsgBox.HEIGHT / 2);
                 addActor(msgBox);
             } else if(text.length() > 3) {
-                name = text;
                 if(name.length() >= 10) name = text.substring(0, 10);
 
                 name = name.replaceAll("'","'");
