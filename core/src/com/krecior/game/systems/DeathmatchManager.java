@@ -47,6 +47,7 @@ public class DeathmatchManager {
             gameScreen.getHud().popUpDMend();
             afterEnd = true;
             gameScreen.canTouchMole = false;
+            gameScreen.stopPhysicSimulation();
         }
     }
 

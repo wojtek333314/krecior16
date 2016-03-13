@@ -121,42 +121,4 @@ public class DMEnd extends Group{
                 , bestScore.getY() - bestScoreValue.getHeight() - 0.01f * GameScreen.H);
 
     }
-
-    private void exampleOfRanking(){
-        Manager.rankingFacade.getRanking(1000, new ServerRequestListener() {
-            @Override
-            public void onSuccess(String json) {
-                System.out.println(json);
-
-            }
-
-            @Override
-            public void onError(int code, String description) {
-
-            }
-
-            @Override
-            public void onConnectionError() {
-
-            }
-        });
-
-        Manager.rankingFacade.registerPoints("wpisanynick", 4200, new ServerRequestListener() {
-            @Override
-            public void onSuccess(String json) {
-                System.out.println(json);
-
-            }
-
-            @Override
-            public void onError(int code, String description) {
-
-            }
-
-            @Override
-            public void onConnectionError() {
-
-            }
-        });
-    }
 }

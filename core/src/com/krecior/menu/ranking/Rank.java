@@ -117,10 +117,10 @@ public class Rank extends Group {
         });
         addActor(enterLabel);
 
-        enter = new TextLabel(Container.getFont(10), "ENTER");
+        enter = new TextLabel(Container.getFont(10), "ENTER NAME");
         addActor(enter);
 
-        rank = new TextLabel(Container.getFont(20), "RANK:");
+        rank = new TextLabel(Container.getFont(16), "RANK:");
         addActor(rank);
     }
 
@@ -149,10 +149,24 @@ public class Rank extends Group {
     private class TextInput implements Input.TextInputListener {
         @Override
         public void input (String text) {
+            if(!text.equals("Enter name")) {
+                MsgBox msgBox = new MsgBox("Invalid name!") {
+                    @Override
+                    public void onTouchDown() {
+                        Gdx.input.getTextInput(listener, "What is your name?", "Name", " ");
+                        super.onTouchDown();
+                    }
+                };
+                msgBox.setPosition(GameScreen.W / 2 - MsgBox.WIDTH / 2
+                        , GameScreen.H / 2 - MsgBox.HEIGHT / 2);
+                addActor(msgBox);
+            }
             if(text.length() > 3) {
                 name = text;
                 if(name.length() >= 10) name = text.substring(0, 10);
-                System.out.println(name);
+
+                name = name.replaceAll("'","'");
+
                 for(RankElement r : rankElements)
                     if(r.name.equals("Enter name")) {
                         r.name = name;
@@ -176,6 +190,7 @@ public class Rank extends Group {
 
                     }
                 });
+                Manager.manager.changeScreen(ScreenType.MAIN_SCREEN);
             } else {
                 MsgBox msgBox = new MsgBox("Too short!") {
                     @Override
