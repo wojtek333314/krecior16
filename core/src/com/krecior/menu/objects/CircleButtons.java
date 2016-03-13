@@ -108,7 +108,7 @@ public class CircleButtons extends Group {
                 soundManage();
                 break;
             case 5:
-                //Manager.manager.changeScreen(ScreenType.SOCIAL_NETWORK);
+                Manager.manager.changeScreen(ScreenType.SOCIAL_NETWORK);
                 Manager.facebookPlugin.getActivityListener().onRunCommand();
                 break;
             case 2:

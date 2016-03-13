@@ -18,7 +18,7 @@ public class DeathmatchManager {
     private float hillTime = 10;
     private boolean afterEnd = false;
 
-    public float lives = 0.01f;
+    public float lives = 20;
 
     public DeathmatchManager(GameScreen gameScreen) {
         this.gameScreen = gameScreen;

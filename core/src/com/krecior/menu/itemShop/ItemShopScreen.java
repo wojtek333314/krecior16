@@ -63,8 +63,6 @@ public class ItemShopScreen extends Stage implements Screen {
         showTopIconAndWallet();
 
         Manager.inputMultiplexer.addProcessor(mainStage);
-
-        exampleOfRanking();
     }
 
     @Override
@@ -252,35 +250,5 @@ public class ItemShopScreen extends Stage implements Screen {
 
         mainStage.addActor(coinIcon);
         mainStage.addActor(topIcon);
-    }
-
-    private void exampleOfRanking(){
-        Manager.rankingFacade.getRanking(1000, new ServerRequestListener() {
-            @Override
-            public void onSuccess(String json) {
-                System.out.println(json);//wyswietlam odpowiedz serwera
-                //tu ozesz zrobic tak:
-
-            }
-
-            @Override
-            public void onError(int code, String description) {
-
-            }
-        });
-
-        Manager.rankingFacade.registerPoints("wpisanynick",4200, new ServerRequestListener() {
-            @Override
-            public void onSuccess(String json) {
-                System.out.println(json);//wyswietlam odpowiedz serwera
-                //tu ozesz zrobic tak:
-
-            }
-
-            @Override
-            public void onError(int code, String description) {
-
-            }
-        });
     }
 }

@@ -14,13 +14,17 @@ import com.krecior.utils.Container;
 import com.krecior.utils.ServerRequestListener;
 import com.krecior.utils.TextLabel;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 public class Rank extends Group {
-    public static float SIZE = 0.95f * GameScreen.H;
-    public static float ENTER_W = 0.55f * GameScreen.W;
-    public static float ENTER_H = 0.1f * GameScreen.H;
-    public static float WALL_GAP = 0.16f * GameScreen.W;
+    public static final float SIZE = 0.95f * GameScreen.H;
+    public static final float ENTER_W = 0.55f * GameScreen.W;
+    public static final float ENTER_H = 0.1f * GameScreen.H;
+    public static final float WALL_GAP = 0.16f * GameScreen.W;
+    public static final int LENGTH = 11;
 
     public String name = "d ";
 
@@ -33,6 +37,9 @@ public class Rank extends Group {
 
     private ArrayList<RankElement> rankElements;
 
+    private JSONObject jsonObject;
+    private boolean first = true;
+
     public Rank(GameScreen gameScreen) {
         this.gameScreen = gameScreen;
 
@@ -40,27 +47,30 @@ public class Rank extends Group {
         rankElements = new ArrayList<RankElement>();
 
         create();
-        createRankElements();
+        refreshRanking(gameScreen.getScoreManager().getPoints());
     }
 
-    private void getRanking(){
-        Manager.rankingFacade.getRanking( 10, new ServerRequestListener() {
+    public void refreshRanking(int k) {
+        Manager.rankingFacade.getRanking(k, new ServerRequestListener() {
             @Override
-            public void onSuccess(String json) {
-                System.out.println(json);//wyswietlam odpowiedz serwera
+            public void onSuccess(String JSON) {
+                jsonObject = new JSONObject(JSON);
+                createRankElements();
             }
 
             @Override
             public void onError(int code, String description) {
-                System.out.println("kurwa blad o kodzie:" + code + "/info:" + description);
+
             }
         });
     }
 
     private void createRankElements() {
-        for(int i = 0; i < 11; i++ ) {
-            RankElement element = new RankElement(i+1, "gracz", 10 * (11-i));
-            element.setPosition(0, GameScreen.H / 2);
+        JSONArray jsonArray = jsonObject.getJSONArray("data");
+        for(int i = 0; i < LENGTH; i++ ) {
+            JSONObject object = jsonArray.getJSONObject(i);
+            RankElement element = new RankElement(i, object);
+            element.setPosition(GameScreen.W, GameScreen.H);
             addActor(element);
             rankElements.add(element);
         }
@@ -83,7 +93,10 @@ public class Rank extends Group {
         enterLabel.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                Gdx.input.getTextInput(listener, "What is your name?", "Name", " ");
+                if(first) {
+                    Gdx.input.getTextInput(listener, "What is your name?", "Name", " ");
+                    first = false;
+                }
                 return false;
             }
         });
@@ -119,42 +132,65 @@ public class Rank extends Group {
         @Override
         public void input (String text) {
             name = text;
+            JSONArray jsonArray = jsonObject.getJSONArray("data");
+            JSONObject object = jsonArray.getJSONObject(LENGTH-1);
+            object.put("nick", name);
+            object.put("points", gameScreen.getScoreManager().getPoints());
+            rankElements.get(LENGTH-1).jsonObject = object;
+            rankElements.get(LENGTH-1).refreshText();
+
+
+            Manager.rankingFacade.registerPoints(name
+                    , gameScreen.getScoreManager().getPoints(), new ServerRequestListener() {
+                @Override
+                public void onSuccess(String json) {
+                    System.out.println("poprawnie");
+                }
+
+                @Override
+                public void onError(int code, String description) {
+                    System.out.println("niepoprawnie");
+                }
+            });
         }
 
         @Override
-        public void canceled () {
-        }
+        public void canceled () { }
     }
 
     private class RankElement extends Actor {
         private final float WIDTH = 0.68f * GameScreen.W;
 
-        public String name;
-        public int score;
-
         private TextLabel nameText;
         private TextLabel scoreText;
-        private int index;
+        private JSONObject jsonObject;
 
-        public RankElement(int index, String name, int score) {
-            this.index = index;
-            this.name = name;
-            this.score = score;
+        public float value;
+
+        public RankElement(int i, JSONObject jsonObject) {
+            this.jsonObject = jsonObject;
 
             create();
         }
 
         private void create() {
-            nameText = new TextLabel(Container.getFont(13), Integer.toString(index) + ". " + name);
+            nameText = new TextLabel(Container.getFont(13),
+                    jsonObject.getString("position") + ". " + jsonObject.getString("nick"));
             addActor(nameText);
 
-            scoreText = new TextLabel(Container.getFont(13), Integer.toString(score));
+            scoreText = new TextLabel(Container.getFont(13), jsonObject.getString("points"));
             addActor(scoreText);
         }
 
         public void setPosition(float x, float y) {
             nameText.setPosition(x, y);
             scoreText.setPosition(x + WIDTH - scoreText.getWidth(), y);
+        }
+
+        public void refreshText() {
+            value = Integer.parseInt(jsonObject.getString("points"));
+            nameText.setText(jsonObject.getString("position") + ". " + jsonObject.getString("nick"));
+            scoreText.setText(jsonObject.getString("points"));
         }
 
         public float getHeight() { return nameText.getHeight(); }
