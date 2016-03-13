@@ -1,7 +1,9 @@
 package com.krecior.android;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -47,12 +49,21 @@ public class AndroidLauncher extends AndroidApplication {
         rankingFacade = new RankingFacade() {
             @Override
             public void registerPoints(String nick, int points, ServerRequestListener listener) {
-                rankingFacadeImplementation.registerPoints(nick, points, listener);
+                if (isOnline())
+                    rankingFacadeImplementation.registerPoints(nick, points, listener);
+                else {
+                    showOfflineMsgbox(listener);
+                }
             }
 
             @Override
             public void getRanking(int points, ServerRequestListener listener) {
-                rankingFacadeImplementation.getPlayersListDependOnNick(points, listener);
+                if (isOnline())
+                    rankingFacadeImplementation.getPlayersListDependOnNick(points, listener);
+                else{
+                    showOfflineMsgbox(listener);
+                }
+
             }
         };
         facebookPluginListener = new FacebookPluginListener() {
@@ -70,10 +81,7 @@ public class AndroidLauncher extends AndroidApplication {
             public boolean isConnectionAvaliable() {
                 ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
                 NetworkInfo ni = cm.getActiveNetworkInfo();
-                if (ni == null) {
-                    return false;
-                } else
-                    return true;
+                return ni != null;
             }
         };
         facebookPluginListener.setActivityListener(new FacebookPluginListener.FacebookActivityListener() {
@@ -96,7 +104,6 @@ public class AndroidLauncher extends AndroidApplication {
 
             @Override
             public void showAd() {
-                System.out.println("show ad");
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -170,7 +177,7 @@ public class AndroidLauncher extends AndroidApplication {
         config = new AndroidApplicationConfiguration();
         ServerMultiTaskManager serverMultiTaskManager = null;
 
-        if (Manager.DEVELOPER_VERSION) {
+        if (Manager.DEVELOPER_VERSION && isOnline()) {
             final ProgressDialog progress = ProgressDialog.show(this, "Downloading levels",
                     "In progress...", true);
             progress.setIndeterminate(true);
@@ -241,6 +248,27 @@ public class AndroidLauncher extends AndroidApplication {
                 interstitialAd.loadAd(ad);
             }
         });
+    }
+
+    private void showOfflineMsgbox(final ServerRequestListener serverRequestListener) {
+        System.out.println("OFFLINE");
+        final AlertDialog.Builder dlgAlert = new AlertDialog.Builder(this);
+        dlgAlert.setMessage("You have no Internet connection!");
+        dlgAlert.setTitle("Warning!");
+        dlgAlert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                serverRequestListener.onError(50, "No connection");
+            }
+        });
+        dlgAlert.setCancelable(true);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                dlgAlert.create().show();
+            }
+        });
+
     }
 
     @Override

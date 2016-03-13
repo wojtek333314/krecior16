@@ -250,5 +250,18 @@ public class ItemShopScreen extends Stage implements Screen {
 
         mainStage.addActor(coinIcon);
         mainStage.addActor(topIcon);
+
+
+        Manager.rankingFacade.getRanking(1000, new ServerRequestListener() {
+            @Override
+            public void onSuccess(String json) {
+                //gotcha!
+            }
+
+            @Override
+            public void onError(int code, String description) {
+                System.out.println("TU OBSLUZ BRAK INTERNETU PO KLIKNIECIU OK");
+            }
+        });
     }
 }
