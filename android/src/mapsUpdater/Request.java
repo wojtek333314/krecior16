@@ -22,7 +22,6 @@ public class Request extends android.os.AsyncTask<Param,Void,Void> {
 		HttpURLConnection connection = null;
 		  try {
 		    //Create connection
-			  System.out.println("SERVER PATH:"+SERVER_PATH+"/"+SERVICE+params.getQuery());
 		    URL url = new URL(SERVER_PATH+"/"+SERVICE+params.getQuery());
 		    connection = (HttpURLConnection)url.openConnection();
 		    connection.setUseCaches(false);

@@ -255,15 +255,31 @@ public class ItemShopScreen extends Stage implements Screen {
     }
 
     private void exampleOfRanking(){
-        Manager.rankingFacade.getPlayersRankingDependsOnNick("wojtaus",10, new ServerRequestListener() {
+        Manager.rankingFacade.getRanking(5000, new ServerRequestListener() {
             @Override
             public void onSuccess(String json) {
                 System.out.println(json);//wyswietlam odpowiedz serwera
+                //tu ozesz zrobic tak:
+
             }
 
             @Override
             public void onError(int code, String description) {
-                System.out.println("kurwa blad o kodzie:"+code+"/info:"+description);
+
+            }
+        });
+
+        Manager.rankingFacade.registerPoints("wpisanynick",1200, new ServerRequestListener() {
+            @Override
+            public void onSuccess(String json) {
+                System.out.println(json);//wyswietlam odpowiedz serwera
+                //tu ozesz zrobic tak:
+
+            }
+
+            @Override
+            public void onError(int code, String description) {
+
             }
         });
     }

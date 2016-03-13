@@ -3,7 +3,6 @@ package ranking;
 import com.krecior.utils.ServerRequestListener;
 
 import ranking.operations.GetList;
-import ranking.operations.RegisterNick;
 import ranking.operations.RegisterPoints;
 
 /**
@@ -11,14 +10,6 @@ import ranking.operations.RegisterPoints;
  */
 public class RankingFacadeImpl {
 
-    /**
-     * Rejestruje nick w bazie danych lub powiadamia o jego istnieniu w onError listenera(chyba w onError).
-     * @param nick
-     * @param listener
-     */
-    public void registerNick(String nick, ServerRequestListener listener) {
-        new RegisterNick(nick, listener);
-    }
 
     /**
      * Ustawia w bazie danych dla podanego nicku daną ilość punktów
@@ -31,11 +22,10 @@ public class RankingFacadeImpl {
     }
 
     /**
-     * Zwraca listę 5 nickow obok nicku gracza wraz z punktami w formie json
-     * @param nick
+     * Zwraca listę 10 nickow obok nicku gracza wraz z punktami w formie json
      * @param listener
      */
-    public void getPlayersListDependOnNick(String nick,int listSize,ServerRequestListener listener){
-        new GetList(nick,Integer.toString(listSize),listener);
+    public void getPlayersListDependOnNick(int points,ServerRequestListener listener){
+        new GetList(String.valueOf(points),listener);
     }
 }

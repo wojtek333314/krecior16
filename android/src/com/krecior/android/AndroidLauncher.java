@@ -46,18 +46,13 @@ public class AndroidLauncher extends AndroidApplication {
         rankingFacadeImplementation = new RankingFacadeImpl();
         rankingFacade = new RankingFacade() {
             @Override
-            public void registerNick(String nick, ServerRequestListener listener) {
-                rankingFacadeImplementation.registerNick(nick, listener);
-            }
-
-            @Override
             public void registerPoints(String nick, int points, ServerRequestListener listener) {
                 rankingFacadeImplementation.registerPoints(nick, points, listener);
             }
 
             @Override
-            public void getPlayersRankingDependsOnNick(String nick,int listSize, ServerRequestListener listener) {
-                rankingFacadeImplementation.getPlayersListDependOnNick(nick,listSize, listener);
+            public void getRanking(int points, ServerRequestListener listener) {
+                rankingFacadeImplementation.getPlayersListDependOnNick(points, listener);
             }
         };
         facebookPluginListener = new FacebookPluginListener() {
