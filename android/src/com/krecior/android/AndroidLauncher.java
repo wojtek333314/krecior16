@@ -181,7 +181,7 @@ public class AndroidLauncher extends AndroidApplication {
         config = new AndroidApplicationConfiguration();
         ServerMultiTaskManager serverMultiTaskManager = null;
 
-        if (Manager.DEVELOPER_VERSION && isOnline()) {
+        if (isOnline()) {
             final ProgressDialog progress = ProgressDialog.show(this, "Downloading levels",
                     "In progress...", true);
             progress.setIndeterminate(true);
