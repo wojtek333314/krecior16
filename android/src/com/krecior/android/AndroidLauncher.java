@@ -60,7 +60,7 @@ public class AndroidLauncher extends AndroidApplication {
             public void getRanking(int points, ServerRequestListener listener) {
                 if (isOnline())
                     rankingFacadeImplementation.getPlayersListDependOnNick(points, listener);
-                else{
+                else {
                     showOfflineMsgbox(listener);
                 }
             }
@@ -127,7 +127,7 @@ public class AndroidLauncher extends AndroidApplication {
         }), new LevelDownloadListener() {
             @Override
             public void reDownload() {
-                if (Manager.DEVELOPER_VERSION && isOnline()) {
+                if (isOnline()) {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -179,42 +179,6 @@ public class AndroidLauncher extends AndroidApplication {
             }
         }, rankingFacade);
         config = new AndroidApplicationConfiguration();
-        ServerMultiTaskManager serverMultiTaskManager = null;
-
-        if (isOnline()) {
-            final ProgressDialog progress = ProgressDialog.show(this, "Downloading levels",
-                    "In progress...", true);
-            progress.setIndeterminate(true);
-            progress.setProgress(10);
-
-            serverMultiTaskManager = new ServerMultiTaskManager() {
-
-                @Override
-                public void updateProgress(float value) {
-                    progress.setProgress((int) (value * 100));
-                }
-
-                @Override
-                public void onEndTasks() {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            progress.dismiss();
-                            Manager.LEVELS_DOWNLOADED = true;
-                            while (Manager.container == null) {
-                                try {
-                                    Thread.sleep(50);
-                                } catch (InterruptedException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                            Manager.container.readLevelsFromServer();
-                        }
-                    });
-
-                }
-            };
-        }
 
         initialize(manager, config);
         setupAds();
@@ -226,19 +190,56 @@ public class AndroidLauncher extends AndroidApplication {
         }
 
 
-        if (Manager.DEVELOPER_VERSION && serverMultiTaskManager != null) {
-            for (int i = 1; i < 46; i++) {
-                final int q = i;
-                serverMultiTaskManager.addDownloadTask(new DownloadFile(Integer.toString(i)) {
-                    @Override
-                    public void onEnd(String out) {
-                        Data.setLevelDataJSON(q, out);
+        if (isOnline()) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    final ProgressDialog progress = ProgressDialog.show(AndroidLauncher.this, "Downloading levels",
+                            "In progress...", true);
+                    progress.setIndeterminate(true);
+                    progress.setProgress(10);
+
+                    ServerMultiTaskManager serverMultiTaskManager = new ServerMultiTaskManager() {
+
+                        @Override
+                        public void updateProgress(float value) {
+                            progress.setProgress((int) (value * 100));
+                        }
+
+                        @Override
+                        public void onEndTasks() {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    progress.dismiss();
+                                    Manager.LEVELS_DOWNLOADED = true;
+                                    while (Manager.container == null) {
+                                        try {
+                                            Thread.sleep(50);
+                                        } catch (InterruptedException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                    Manager.container.readLevelsFromServer();
+                                }
+                            });
+
+                        }
+                    };
+                    for (int i = 1; i < 46; i++) {
+                        final int q = i;
+                        serverMultiTaskManager.addDownloadTask(new DownloadFile(Integer.toString(i)) {
+                            @Override
+                            public void onEnd(String out) {
+                                Data.setLevelDataJSON(q, out);
+                            }
+                        });
                     }
-                });
-            }
-            //startActivityForResult(download,55);
-            serverMultiTaskManager.startDownloading();
+                    serverMultiTaskManager.startDownloading();
+                }
+            });
         }
+
     }
 
     public void loadAd() {

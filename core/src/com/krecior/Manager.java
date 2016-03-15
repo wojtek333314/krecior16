@@ -29,7 +29,7 @@ public class Manager extends Game {
     public static  RankingFacade rankingFacade;
     public static LevelDownloadListener levelDownloadListener;
     // ----- app stores -------------------------
-    public static boolean DEVELOPER_VERSION = true;
+    public static boolean DEVELOPER_VERSION = false;
     public static boolean LEVELS_DOWNLOADED = false;
     public static final int APPSTORE_UNDEFINED = 0;
     public static final int APPSTORE_GOOGLE = 1;
