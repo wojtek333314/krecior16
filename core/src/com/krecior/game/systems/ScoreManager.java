@@ -52,6 +52,9 @@ public class ScoreManager {
     public void addDiamonds(int mDiamondsToAdd) { diamonds += mDiamondsToAdd; }
 
     public void manage() {
+        System.out.println("killed: " + killedMoles);
+        System.out.println("deserters: " + deserters);
+        System.out.println("targets: " + destroyedTargets);
         if(checking) {
             result = (float)(killedMoles + destroyedTargets) / game.getMoleManager().getAllMoles();
             if (result >= 0.4f) endDiamonds = 1;
@@ -79,9 +82,10 @@ public class ScoreManager {
 
     public void addBadThrowMole(Mole m) {
         if (!m.isKilled())
-            increaseKilledMoles();
+            increaseDeserters();
         m.setKilled(true);
         points += 25;
+
 
         if (game.isDeathmatch()) {
             game.getDeathmatchManager().lives -= 0.1f;
