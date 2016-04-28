@@ -294,22 +294,26 @@ public class Container {
         pLandsJSON.setIgnoreUnknownFields(true);
         pLandsJSON.setOutputType(OutputType.json);
 
-        pLvlsData = new Lvl[46];
-        for (int i = 0; i < pLvlsData.length -1; i++) {
-            System.out.println(i+":"+Data.getLevelDataJSON(i + 1));
-            pLvlsData[i] = pLandsJSON.fromJson(Lvl.class, Data.getLevelDataJSON(i + 1));
-            Array<PowerJSON> tab = pLvlsData[i].powers;
-            for (PowerJSON powerJSON : tab) {
-                powerJSON.setType();
-            }
-            PowerJSON.typeIndex = 0;
-        }
-        pLvlsData[pLvlsData.length-1] = pLandsJSON.fromJson(Lvl.class, Gdx.files.internal("json/level_deathmatch.json"));
-        Array<PowerJSON> tab = pLvlsData[pLvlsData.length-1].powers;
-        for(PowerJSON powerJSON : tab){
-            powerJSON.setType();
-        }
-        PowerJSON.typeIndex = 0;
+		try {
+			pLvlsData = new Lvl[46];
+			for (int i = 0; i < pLvlsData.length - 1; i++) {
+				pLvlsData[i] = pLandsJSON.fromJson(Lvl.class, Data.getLevelDataJSON(i + 1));
+				Array<PowerJSON> tab = pLvlsData[i].powers;
+				for (PowerJSON powerJSON : tab) {
+					powerJSON.setType();
+				}
+				PowerJSON.typeIndex = 0;
+			}
+			pLvlsData[pLvlsData.length - 1] = pLandsJSON.fromJson(Lvl.class, Gdx.files.internal("json/level_deathmatch.json"));
+			Array<PowerJSON> tab = pLvlsData[pLvlsData.length - 1].powers;
+			for (PowerJSON powerJSON : tab) {
+				powerJSON.setType();
+			}
+			PowerJSON.typeIndex = 0;
+		}catch (Exception e){
+			e.printStackTrace();
+			readJSONs();
+		}
     }
 
 	// ===========================================================

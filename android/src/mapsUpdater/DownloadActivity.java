@@ -18,7 +18,5 @@ public class DownloadActivity extends Activity {
                 "In progress...", true);
         progress.setIndeterminate(true);
         progress.setProgress(10);
-
-
     }
 }
