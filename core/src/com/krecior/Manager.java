@@ -132,7 +132,7 @@ public class Manager extends Game {
         Gdx.input.setInputProcessor(inputMultiplexer);
         lastScreenType = ScreenType.MAIN_SCREEN;
         setScreen(new Intro());
-        getPlatformResolver().requestPurchaseRestore();    // check for purchases in the past
+        //getPlatformResolver().requestPurchaseRestore();    // check for purchases in the past
     }
 
     public void startLevel(int level) {
@@ -152,7 +152,7 @@ public class Manager extends Game {
         Gdx.input.setInputProcessor(Manager.inputMultiplexer);
         Manager.inputMultiplexer.getProcessors().clear();
         if (mScreen != ScreenType.MAIN_SCREEN)
-            Manager.adMobPlugin.getAdMobPluginListener().hideAd();
+           ;// Manager.adMobPlugin.getAdMobPluginListener().hideAd();
 
         switch (mScreen) {
             case MAIN_SCREEN:
